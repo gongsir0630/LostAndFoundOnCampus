@@ -1,0 +1,65 @@
+package com.gongsir.wxapp.service.impl;
+
+import com.gongsir.wxapp.mapper.CardMapper;
+import com.gongsir.wxapp.model.Card;
+import com.gongsir.wxapp.model.CardExample;
+import com.gongsir.wxapp.service.CardService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Service;
+
+import javax.annotation.Resource;
+import java.util.List;
+
+/**
+ * @author 龚涛
+ * @date 2019/10/28 10:56
+ * 编码不要畏惧变化，要拥抱变化
+ */
+@Service
+public class CardServiceImpl implements CardService {
+    private static final Logger logger = LoggerFactory.getLogger(CardServiceImpl.class);
+
+    @Resource
+    CardMapper cardMapper;
+    /**
+     * 添加证件丢失信息
+     *
+     * @param card 证件信息
+     * @return 返回主键id
+     */
+    @Override
+    public int saveCard(Card card) {
+        logger.info("CardServiceImpl插入数据:{}",card);
+        return cardMapper.insert(card);
+    }
+
+    /**
+     * 通过id查找证件信息
+     *
+     * @param id 主键id
+     * @return 证件信息
+     */
+    @Override
+    public Card selectByPk(Integer id) {
+        return cardMapper.selectByPrimaryKey(id);
+    }
+
+    /**
+     * 通过证件号和状态查找证件信息
+     *
+     * @param num    证件号码
+     * @param status 证件状态:ok/no
+     * @return list集合
+     */
+    @Override
+    public List<Card> selectByNumAndStatus(String num, String status) {
+        CardExample example = new CardExample();
+        CardExample.Criteria criteria = example.createCriteria();
+        criteria.andCardNumEqualTo(num);
+        if (status!=null){
+            criteria.andCardStatusEqualTo(status);
+        }
+        return cardMapper.selectByExample(example);
+    }
+}
