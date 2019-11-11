@@ -1,6 +1,7 @@
 package com.gongsir.wxapp.configuration;
 
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
@@ -18,6 +19,11 @@ import java.util.List;
 public class MyWebAppConfiguration implements WebMvcConfigurer {
     @Value("${upload.location}")
     private String path;
+
+    @Bean
+    public MyInterceptor getMyInterceptor(){
+        return new MyInterceptor();
+    }
 
     /**
      * 配置资源映射
@@ -39,7 +45,7 @@ public class MyWebAppConfiguration implements WebMvcConfigurer {
         List<String> stringList = new ArrayList<>();
         stringList.add("/wxApi/user/login/**");
         stringList.add("/uploadImg/**");
-        registry.addInterceptor(new MyInterceptor())
+        registry.addInterceptor(getMyInterceptor())
                 //拦截所有请求
                 .addPathPatterns("/wxApi/**")
                 .excludePathPatterns(stringList);

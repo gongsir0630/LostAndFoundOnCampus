@@ -1,13 +1,17 @@
 package com.gongsir.wxapp.configuration;
 
 import com.alibaba.fastjson.JSONObject;
+import com.gongsir.wxapp.utils.Base64Util;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.PrintWriter;
 
 /**
@@ -17,6 +21,8 @@ import java.io.PrintWriter;
  */
 public class MyInterceptor implements HandlerInterceptor {
     private static final Logger logger = LoggerFactory.getLogger(MyInterceptor.class);
+    @Autowired
+    private StringRedisTemplate redisTemplate;
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
@@ -24,16 +30,20 @@ public class MyInterceptor implements HandlerInterceptor {
         String sessionKey = request.getParameter("sessionKey");
         logger.info("MyInterceptor>>>preHandle");
         logger.info("拦截器preHandle拦截的sessionKey:{}",sessionKey);
-        if (sessionKey == null){
-            PrintWriter writer = response.getWriter();
-            JSONObject jsonObject = new JSONObject();
-            jsonObject.put("code",1024);
-            jsonObject.put("msg","your sessionKey is null!");
-            jsonObject.put("sessionKey",sessionKey);
-            writer.println(jsonObject);
-            return false;
+        HttpSession session = request.getSession();
+        if (session.getAttribute("sessionKey") != null){
+            String session_key = redisTemplate.opsForValue().get("sessionKey:"+Base64Util.decode2Array(session.getAttribute("sessionKey").toString())[0]);
+            if (session_key != null && session_key.equals(Base64Util.decode2Array(session.getAttribute("sessionKey").toString())[1])){
+                logger.info("身份验证通过");
+                return true;
+            }
         }
-        return true;
+        logger.info("身份验证未通过");
+        PrintWriter writer = response.getWriter();
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("code",401);jsonObject.put("msg","your sessionKey is null or has Invalided!");
+        jsonObject.put("sessionKey",sessionKey);writer.println(jsonObject);
+        return false;
     }
 
     @Override
