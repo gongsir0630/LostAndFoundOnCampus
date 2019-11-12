@@ -14,8 +14,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
@@ -55,8 +53,7 @@ public class UserController {
     @PostMapping(path = "login")
     public JSONObject wxLogin(@RequestParam("code") String code,
                               @RequestParam(value = "nickName") String name,
-                              @RequestParam("headImg")String headImg,
-                              HttpServletRequest request){
+                              @RequestParam("headImg")String headImg){
         Map<String,String> param = new HashMap<>();
         //封装请求参数
         param.put("appid", UserConstantInterface.WX_LOGIN_AppID);
@@ -66,20 +63,20 @@ public class UserController {
         //调用微信接口
         String wxResult = HttpClientUtil.doGet(UserConstantInterface.WX_LOGIN_URL,param);
         JSONObject jsonObject = JSONObject.parseObject(wxResult);
-        if (Integer.valueOf(jsonObject.get("errcode").toString())!=0){
+        logger.info("wxResult:{}",jsonObject);
+        if (jsonObject.containsKey("errcode") && Integer.parseInt(jsonObject.get("errcode").toString())!=0){
             logger.info("=====>>接口信息错误:"+jsonObject.get("errcode")+","+jsonObject.get("errmsg"));
             JSONObject response = new JSONObject();
             response.put("errcode",jsonObject.get("errcode"));
             response.put("errmsg", jsonObject.get("errmsg"));
             return response;
         }
-        logger.info("wxResult:{}",jsonObject);
         //取出openid和session_key
         String openid = jsonObject.get("openid").toString();
         String session_key = jsonObject.get("session_key").toString();
         //封装返回数据集
         JSONObject res = new JSONObject();
-        res.put("msg","身份认证成功!");
+        res.put("msg","小程序登录认证成功!");
         //判断用户是否存在
         User user = userService.selectUserByOpenID(Base64Util.encodeData(openid));
         //不存在,插入数据
@@ -97,11 +94,9 @@ public class UserController {
         //返回自定义登录状态,加密数据
         res.put("sessionKey", Base64Util.encodeOpenIDAndSessionKey(openid,session_key));
         res.put("code",user.getId());
-        //加入session会话验证
-        HttpSession session = request.getSession();
-        session.setAttribute("sessionKey",Base64Util.encodeOpenIDAndSessionKey(openid,session_key));
         //存储用户id-session_key到redis中.30min有效
-        redisTemplate.opsForValue().setIfPresent("sessionKey"+openid, session_key,60*30, TimeUnit.SECONDS);
+        redisTemplate.opsForValue().set("sessionKey:"+openid, session_key,60*30, TimeUnit.SECONDS);
+        logger.info("返回信息:{}",res);
         return res;
     }
 
@@ -123,6 +118,7 @@ public class UserController {
             jsonObject.put("code",1024);
             jsonObject.put("msg","error");
         }
+        logger.info("res返回信息:{}",jsonObject.toString());
         return jsonObject;
     }
 }

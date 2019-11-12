@@ -45,6 +45,7 @@ public class CardController {
     public JSONObject add(Card card){
         logger.info("添加证件丢失信息:{}",card);
         card.setCardTime(new Date());
+        card.setCardStatus("no");
         int rs = cardService.saveCard(card);
         JSONObject jsonObject = new JSONObject();
         boolean flag = false;
@@ -70,12 +71,14 @@ public class CardController {
                 jsonObject.put("msg","证件信息发布成功");
                 jsonObject.put("data",cardService.selectByPk(rs));
             }
+            logger.info("返回信息:{}",jsonObject);
             return jsonObject;
         }else {
             jsonObject.put("code",1024);
             jsonObject.put("msg","error,证件信息发布失败");
             jsonObject.put("data",card);
         }
+        logger.info("返回信息:{}",jsonObject);
         return jsonObject;
     }
 }

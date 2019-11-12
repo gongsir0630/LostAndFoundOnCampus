@@ -35,7 +35,7 @@ public class UserUtil {
 
     /**
      * 推送模板消息给用户
-     * @param openid 用户信息
+     * @param openid 用户信息(加密后的)
      * @param card 证件信息
      * @param formid form表单id
      * @return 操作成功与否

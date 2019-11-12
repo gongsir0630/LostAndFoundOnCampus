@@ -102,6 +102,7 @@ public class GoodController {
             logger.info("图片上传成功");
             good.setGoodImage("/uploadImg/"+format+newName);
             good.setTime(new Date());
+            good.setGoodStatus("no");
             int rs = goodService.saveGood(good);
             jsonObject.put("msg","信息发布成功");
             jsonObject.put("code",rs);

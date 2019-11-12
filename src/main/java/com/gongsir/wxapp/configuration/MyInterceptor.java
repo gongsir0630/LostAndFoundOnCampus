@@ -11,7 +11,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import java.io.PrintWriter;
 
 /**
@@ -27,18 +26,19 @@ public class MyInterceptor implements HandlerInterceptor {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         response.setCharacterEncoding("UTF-8");
+        //获取sessionKey,进行身份验证
         String sessionKey = request.getParameter("sessionKey");
-        logger.info("MyInterceptor>>>preHandle");
-        logger.info("拦截器preHandle拦截的sessionKey:{}",sessionKey);
-        HttpSession session = request.getSession();
-        if (session.getAttribute("sessionKey") != null){
-            String session_key = redisTemplate.opsForValue().get("sessionKey:"+Base64Util.decode2Array(session.getAttribute("sessionKey").toString())[0]);
-            if (session_key != null && session_key.equals(Base64Util.decode2Array(session.getAttribute("sessionKey").toString())[1])){
-                logger.info("身份验证通过");
+        logger.info("---------------------开始进入请求地址拦截----------------------------");
+        logger.info("请求地址:{}",request.getRequestURL());
+        logger.info("请求参数:{}",request.getQueryString());
+        if (sessionKey != null && !"".equals(sessionKey)){
+            String session_key = redisTemplate.opsForValue().get("sessionKey:"+Base64Util.decode2Array(sessionKey)[0]);
+            if (session_key != null && session_key.equals(Base64Util.decode2Array(sessionKey)[1])){
+                logger.info("---------------------拦截器身份验证通过---------------------");
                 return true;
             }
         }
-        logger.info("身份验证未通过");
+        logger.info("---------------------拦截器身份验证未通过---------------------");
         PrintWriter writer = response.getWriter();
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("code",401);jsonObject.put("msg","your sessionKey is null or has Invalided!");
@@ -48,11 +48,9 @@ public class MyInterceptor implements HandlerInterceptor {
 
     @Override
     public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView) throws Exception {
-        logger.info("MyInterceptor>>>postHandle");
     }
 
     @Override
     public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) throws Exception {
-        logger.info("MyInterceptor>>>afterCompletion");
     }
 }

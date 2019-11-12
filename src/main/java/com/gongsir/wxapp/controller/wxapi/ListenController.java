@@ -6,6 +6,7 @@ import com.gongsir.wxapp.model.Listen;
 import com.gongsir.wxapp.service.CardService;
 import com.gongsir.wxapp.service.ListenService;
 import com.gongsir.wxapp.utils.Base64Util;
+import com.gongsir.wxapp.utils.UserUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -58,15 +59,18 @@ public class ListenController {
                 //第一次提交监听
                 listen.setLisTime(new Date());
                 listen.setOpenid(Base64Util.encodeData(Base64Util.decode2Array(sessionKey)[0]));
+                listen.setLisStatus("no");
                 rs = listenService.addListen(listen);
             }
             if (rs>0){
                 jsonObject.put("code",rs);
                 jsonObject.put("msg","证件信息监听中,请留意微信小程序通知");
+                LOGGER.info("返回信息:{}",jsonObject);
                 return jsonObject;
             }else {
                 jsonObject.put("code",1024);
                 jsonObject.put("msg","未知错误error,请联系管理员微信:GT980630");
+                LOGGER.info("返回信息:{}",jsonObject);
                 return jsonObject;
             }
         }
@@ -74,6 +78,15 @@ public class ListenController {
         jsonObject.put("code","ok");
         jsonObject.put("msg","已为你找到相关的证件信息");
         jsonObject.put("cards",cards);
+        //推送消息通知
+        boolean b = UserUtil.messagePush(Base64Util.encodeData(Base64Util.decode2Array(sessionKey)[0]), cards.get(0), listen.getFormId());
+        if (b){
+            jsonObject.put("pushMsg","消息推送成功");
+            LOGGER.info("返回信息:{}",jsonObject);
+            return jsonObject;
+        }
+        jsonObject.put("pushMsg","消息推送失败");
+        LOGGER.info("返回信息:{}",jsonObject);
         return jsonObject;
     }
 }
