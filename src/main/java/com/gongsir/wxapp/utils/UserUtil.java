@@ -4,7 +4,6 @@ import com.alibaba.fastjson.JSONObject;
 import com.gongsir.wxapp.configuration.UserConstantInterface;
 import com.gongsir.wxapp.controller.wxapi.UserController;
 import com.gongsir.wxapp.model.Card;
-import com.gongsir.wxapp.model.User;
 import com.sun.org.apache.xerces.internal.impl.dv.util.Base64;
 import org.bouncycastle.jce.provider.BouncyCastleProvider;
 import org.slf4j.Logger;
@@ -62,7 +61,7 @@ public class UserUtil {
         JSONObject jsonObject1 = new JSONObject();
         jsonObject1.put("touser",Base64Util.decodeData(openid));
         jsonObject1.put("template_id", UserConstantInterface.Template_ID);
-        jsonObject1.put("formid",formid);
+        jsonObject1.put("form_id",formid);
 
         JSONObject jsonObject2 = new JSONObject();
         JSONObject jsonObject3 = new JSONObject();
@@ -87,8 +86,8 @@ public class UserUtil {
         jsonObject2.put("keyword4",jsonObject3);
 
         jsonObject3 = new JSONObject();
-        jsonObject3.put("value",card.getCardTime());
-        jsonObject2.put("keyword5",sdf.format(card.getCardTime()));
+        jsonObject3.put("value",sdf.format(card.getCardTime()));
+        jsonObject2.put("keyword5",jsonObject3);
 
         jsonObject3 = new JSONObject();
         jsonObject3.put("value","感谢使用西柚失物招领,欢迎推广!");
