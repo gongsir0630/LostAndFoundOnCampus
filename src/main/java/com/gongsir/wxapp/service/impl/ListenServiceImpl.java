@@ -75,7 +75,6 @@ public class ListenServiceImpl implements ListenService {
         ListenExample example = new ListenExample();
         ListenExample.Criteria criteria = example.createCriteria();
         criteria.andOpenidEqualTo(openid);
-        criteria.andLisTypeEqualTo(type);
         if (type!=null){
             criteria.andLisTypeEqualTo(type);
         }

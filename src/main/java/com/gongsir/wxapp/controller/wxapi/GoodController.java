@@ -18,6 +18,7 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 import java.util.UUID;
 
 /**
@@ -126,7 +127,7 @@ public class GoodController {
                                      @RequestParam("limit") int limit,
                                      @RequestParam("sessionKey") String sessionKey){
         JSONObject jsonObject = new JSONObject();
-        if (goodService.selectBGoodyPk(Integer.valueOf(id)).getOpenid().equals(Base64Util.encodeData(Base64Util.decode2Array(sessionKey)[0]))){
+        if (Objects.equals(Base64Util.encodeData(Base64Util.decode2Array(sessionKey)[0]), goodService.selectBGoodyPk(Integer.valueOf(id)).getOpenid())){
             int rs = goodService.deleteGoodByPk(Integer.valueOf(id));
             jsonObject.put("code",rs);
             jsonObject.put("msg","删除成功");
