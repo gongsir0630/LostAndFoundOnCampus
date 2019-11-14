@@ -89,6 +89,7 @@ public class UserController {
         }
         //判断是否绑定学号
         if (null==user.getStuNum() || "".equals(user.getStuNum())){
+            res.put("code",-1);
             res.put("msg","同学你好,欢迎使用西柚失物招领小程序,首次使用请绑定学号,谢谢!");
         }
         //返回自定义登录状态,加密数据

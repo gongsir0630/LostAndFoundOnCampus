@@ -66,6 +66,7 @@ public class UserUtil {
         JSONObject jsonObject2 = new JSONObject();
         JSONObject jsonObject3 = new JSONObject();
 
+        //证件类型
         if ("stuCard".equals(card.getCardType())){
             jsonObject3.put("value","西南石油校园一卡通 / stuCard");
         }else {
@@ -73,22 +74,26 @@ public class UserUtil {
         }
         jsonObject2.put("keyword1",jsonObject3);
 
+        //证件信息
         jsonObject3 = new JSONObject();
-        jsonObject3.put("value","证件号:"+card.getCardNum()+"\n姓名:"+card.getCardName());
+        jsonObject3.put("value","证件号:"+card.getCardNum()+"\n\n姓名:"+card.getCardName());
         jsonObject2.put("keyword2",jsonObject3);
 
         jsonObject3 = new JSONObject();
         jsonObject3.put("value","失物招领");
         jsonObject2.put("keyword3",jsonObject3);
 
-        jsonObject3 = new JSONObject();
-        jsonObject3.put("value",card.getRelation());
-        jsonObject2.put("keyword4",jsonObject3);
-
+        //发布时间
         jsonObject3 = new JSONObject();
         jsonObject3.put("value",sdf.format(card.getCardTime()));
+        jsonObject2.put("keyword4",jsonObject3);
+
+        //联系方式
+        jsonObject3 = new JSONObject();
+        jsonObject3.put("value",card.getRelation());
         jsonObject2.put("keyword5",jsonObject3);
 
+        //备注
         jsonObject3 = new JSONObject();
         jsonObject3.put("value","感谢使用西柚失物招领,欢迎推广!");
         jsonObject2.put("keyword6",jsonObject3);
