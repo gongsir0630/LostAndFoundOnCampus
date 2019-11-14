@@ -10,8 +10,6 @@ import javax.annotation.Resource;
 import java.util.Date;
 import java.util.List;
 
-import static org.junit.Assert.*;
-
 /**
  * @author 龚涛
  * @date 2019/10/25 14:25
@@ -60,7 +58,8 @@ public class GoodServiceTest {
 
     @Test
     public void selectAllGoods() {
-
+        List<Good> list = goodService.selectAllGoods(3,3,2);
+        list.forEach(System.out::println);
     }
 
     @Test

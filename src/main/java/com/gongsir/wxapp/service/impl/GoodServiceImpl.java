@@ -78,6 +78,7 @@ public class GoodServiceImpl implements GoodService {
         criteria.andOpenidEqualTo(openID);
         example.setOffset(offset);
         example.setLimit(limit);
+        example.setOrderByClause("id desc");
         return goodMapper.selectByExample(example);
     }
 
@@ -95,7 +96,7 @@ public class GoodServiceImpl implements GoodService {
      * @return list集合
      */
     @Override
-    public List<Good> selectAllGoods(int page, int limit) {
+    public List<Good> selectAllGoods(int page, int limit, int sort) {
         page = Math.max(page, 1);
         int offset= (page-1)*limit;
         GoodExample example = new GoodExample();
@@ -103,6 +104,11 @@ public class GoodServiceImpl implements GoodService {
         criteria.andIdIsNotNull();
         example.setOffset(offset);
         example.setLimit(limit);
+        if (sort==1){
+            example.setOrderByClause("id asc");
+        }else {
+            example.setOrderByClause("id desc");
+        }
         return goodMapper.selectByExample(example);
     }
 
@@ -129,6 +135,7 @@ public class GoodServiceImpl implements GoodService {
         criteria.andGoodClassEqualTo(goodClass);
         example.setOffset(offset);
         example.setLimit(limit);
+        example.setOrderByClause("id desc");
         return goodMapper.selectByExample(example);
     }
 
@@ -158,6 +165,7 @@ public class GoodServiceImpl implements GoodService {
         example.or(example.createCriteria().andGoodTextsLike('%'+keyword+'%'));
         example.setOffset(offset);
         example.setLimit(limit);
+        example.setOrderByClause("id desc");
         return goodMapper.selectByExample(example);
     }
 

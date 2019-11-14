@@ -1,5 +1,4 @@
 package com.gongsir.wxapp.controller.wxapi;
-
 import com.alibaba.fastjson.JSONObject;
 import com.gongsir.wxapp.model.Good;
 import com.gongsir.wxapp.model.User;
@@ -52,9 +51,9 @@ public class GoodController {
      * @return list集合
      */
     @GetMapping("all")
-    public JSONObject all(int page, int limit){
+    public JSONObject all(int page, int limit, @RequestParam(value = "sort",defaultValue = "2") int sort){
         JSONObject jsonObject = new JSONObject();
-        List<Good> goods = goodService.selectAllGoods(page,limit);
+        List<Good> goods = goodService.selectAllGoods(page,limit,sort);
         jsonObject.put("msg","data access success");
         jsonObject.put("count",goodService.getAllCount());
         //查询发布者信息
@@ -153,6 +152,25 @@ public class GoodController {
                             @RequestParam("limit") int limit){
         JSONObject jsonObject = new JSONObject();
         String openid = Base64Util.encodeData(Base64Util.decode2Array(sessionKey)[0]);
+        return getJsonObject(page, limit, openid, jsonObject);
+    }
+
+    /**
+     * 查询某位用户已经发布的所有信息
+     * @param page 页数
+     * @param limit 数量
+     * @param openid 用户id
+     * @return json
+     */
+    @GetMapping(path = "his")
+    public JSONObject someoneAdd(@RequestParam("page") int page,
+                                 @RequestParam("limit") int limit,
+                                 @RequestParam("openid") String openid){
+        JSONObject jsonObject = new JSONObject();
+        return getJsonObject(page, limit, openid, jsonObject);
+    }
+
+    private JSONObject getJsonObject(@RequestParam("page") int page, @RequestParam("limit") int limit, @RequestParam("openid") String openid, JSONObject jsonObject) {
         List<Good> goods = goodService.selectGoodsByOpenID(openid, page, limit);
         User user = userService.selectUserByOpenID(openid);
         for (Good good :
