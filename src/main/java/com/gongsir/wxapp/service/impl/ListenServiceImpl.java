@@ -92,6 +92,6 @@ public class ListenServiceImpl implements ListenService {
      */
     @Override
     public int updateListenFormIdByPk(Listen listen) {
-        return listenMapper.updateByPrimaryKeySelective(listen);
+        return listenMapper.updateByPrimaryKey(listen);
     }
 }
