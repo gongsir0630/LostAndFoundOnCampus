@@ -59,6 +59,7 @@ public class ListenServiceImpl implements ListenService {
             criteria.andLisStatusEqualTo(status);
         }
         example.setDistinct(true);
+        example.setOrderByClause("id desc");
         return listenMapper.selectByExample(example);
     }
 
@@ -82,6 +83,7 @@ public class ListenServiceImpl implements ListenService {
             criteria.andLisStatusEqualTo(status);
         }
         example.setDistinct(true);
+        example.setOrderByClause("id desc");
         return listenMapper.selectByExample(example);
     }
 

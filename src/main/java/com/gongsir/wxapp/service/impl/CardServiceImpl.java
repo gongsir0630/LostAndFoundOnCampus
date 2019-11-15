@@ -60,6 +60,7 @@ public class CardServiceImpl implements CardService {
         if (status!=null){
             criteria.andCardStatusEqualTo(status);
         }
+        example.setOrderByClause("id desc");
         return cardMapper.selectByExample(example);
     }
 }

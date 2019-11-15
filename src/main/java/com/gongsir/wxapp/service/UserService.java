@@ -2,6 +2,7 @@ package com.gongsir.wxapp.service;
 
 import com.gongsir.wxapp.model.User;
 
+import java.sql.SQLException;
 import java.util.List;
 
 /**
@@ -15,7 +16,7 @@ public interface UserService {
      * @param user 用户信息
      * @return 主键id
      */
-    int saveUser(User user);
+    int saveUser(User user) throws SQLException;
 
     /**
      * 通过openID查询用户信息

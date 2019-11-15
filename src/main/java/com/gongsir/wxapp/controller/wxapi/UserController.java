@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.annotation.Resource;
+import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
@@ -81,22 +82,29 @@ public class UserController {
         //判断用户是否存在
         User user = userService.selectUserByOpenID(Base64Util.encodeData(openid));
         //不存在,插入数据
-        if (user==null){
-            user = new User();
-            user.setUserOpenid(Base64Util.encodeData(openid));
-            //过滤微信昵称的emoji表情
-            user.setUserName(EmojiParser.removeAllEmojis(name));
-            user.setUserHead(headImg);
-            userService.saveUser(user);
+        try {
+            if (user==null){
+                user = new User();
+                user.setUserOpenid(Base64Util.encodeData(openid));
+                //过滤微信昵称的emoji表情
+                user.setUserName(EmojiParser.removeAllEmojis(name));
+                user.setUserHead(headImg);
+                userService.saveUser(user);
+            }
+        }catch (SQLException e){
+            jsonObject.put("code",1024);
+            jsonObject.put("msg","昵称不合法,不能包含特殊字符");
+            return jsonObject;
         }
         //判断是否绑定学号
         if (null==user.getStuNum() || "".equals(user.getStuNum())){
             res.put("code",-1);
             res.put("msg","同学你好,欢迎使用西柚失物招领小程序,首次使用请绑定学号,谢谢!");
+        }else {
+            res.put("code",user.getId());
         }
         //返回自定义登录状态,加密数据
         res.put("sessionKey", Base64Util.encodeOpenIDAndSessionKey(openid,session_key));
-        res.put("code",user.getId());
         //存储用户id-session_key到redis中.30min有效
         redisTemplate.opsForValue().set("sessionKey:"+openid, session_key,60*30, TimeUnit.SECONDS);
         logger.info("返回信息:{}",res);
