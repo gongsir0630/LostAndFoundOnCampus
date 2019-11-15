@@ -6,6 +6,7 @@ import com.gongsir.wxapp.model.User;
 import com.gongsir.wxapp.service.UserService;
 import com.gongsir.wxapp.utils.Base64Util;
 import com.gongsir.wxapp.utils.HttpClientUtil;
+import com.vdurmont.emoji.EmojiParser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -83,7 +84,8 @@ public class UserController {
         if (user==null){
             user = new User();
             user.setUserOpenid(Base64Util.encodeData(openid));
-            user.setUserName(name);
+            //过滤微信昵称的emoji表情
+            user.setUserName(EmojiParser.removeAllEmojis(name));
             user.setUserHead(headImg);
             userService.saveUser(user);
         }

@@ -53,9 +53,10 @@ public interface GoodService {
      * 查询所有good信息
      * @param page 页码
      * @param limit 每页显示数量
+     * @param sort 排序规则
      * @return list集合
      */
-    List<Good> selectAllGoods(int page, int limit);
+    List<Good> selectAllGoods(int page, int limit, int sort);
     long getAllCount();
 
     /**

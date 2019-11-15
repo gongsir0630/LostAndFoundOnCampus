@@ -6,7 +6,7 @@ import java.util.Date;
 /**
  * @author 龚涛
  */
-public class Good implements Serializable {
+public class Good implements Serializable,Comparable<Good> {
     /**
      * id
      */
@@ -215,5 +215,10 @@ public class Good implements Serializable {
         sb.append(", serialVersionUID=").append(serialVersionUID);
         sb.append("]");
         return sb.toString();
+    }
+
+    @Override
+    public int compareTo(Good o) {
+        return id.compareTo(o.getId());
     }
 }
