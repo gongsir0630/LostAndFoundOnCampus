@@ -76,7 +76,7 @@ public class UserUtil {
 
         //证件信息
         jsonObject3 = new JSONObject();
-        jsonObject3.put("value","证件号:"+card.getCardNum()+"\n\n姓名:"+card.getCardName());
+        jsonObject3.put("value","证件号:"+card.getCardNum()+"\n\n姓  名:"+card.getCardName());
         jsonObject2.put("keyword2",jsonObject3);
 
         jsonObject3 = new JSONObject();
@@ -90,7 +90,7 @@ public class UserUtil {
 
         //联系方式
         jsonObject3 = new JSONObject();
-        jsonObject3.put("value",card.getRelation());
+        jsonObject3.put("value",card.getRelation().replaceFirst("place","指定地点领取"));
         jsonObject2.put("keyword5",jsonObject3);
 
         //备注
@@ -108,22 +108,22 @@ public class UserUtil {
 
     /**
      * 解析用户的个人信息
-     * @param session_keu 唯一标识
+     * @param sessionKey 唯一标识
      * @param encryptedData 加密数据
      * @param iv 偏移量
      * @return 个人信息
      */
-    public static JSONObject getUserInfo(String session_keu, String encryptedData, String iv){
+    public static JSONObject getUserInfo(String sessionKey, String encryptedData, String iv){
         byte[] dataByte = Base64.decode(encryptedData);
-        byte[] keyByte = Base64.decode(session_keu);
+        byte[] keyByte = Base64.decode(sessionKey);
         byte[] ivByte = Base64.decode(iv);
         System.out.println(encryptedData);
-        System.out.println(session_keu);
+        System.out.println(sessionKey);
         System.out.println(iv);
         try {
             int base = 16;
             if (keyByte.length % base != 0) {
-                int groups = keyByte.length / base + (keyByte.length % base != 0 ? 1 : 0);
+                int groups = keyByte.length / base + 1;
                 byte[] temp = new byte[groups * base];
                 Arrays.fill(temp, (byte) 0);
                 System.arraycopy(keyByte, 0, temp, 0, keyByte.length);

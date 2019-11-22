@@ -34,6 +34,13 @@ public class CardController {
     @Resource
     ListenService listenService;
 
+    /**
+     * 证件识别接口
+     * @param file 图片二进制文件
+     * @param type 证件类型
+     * @return 证件信息集
+     * @throws Exception 异常处理
+     */
     @PostMapping(path = "ocr")
     public JSONObject ocr(@RequestParam("file") MultipartFile file,
                           @RequestParam("type") String type) throws Exception {
@@ -41,10 +48,16 @@ public class CardController {
         return OCRUtil.ocr(file,type);
     }
 
+    /**
+     * 添加证件信息
+     * @param card 证件信息对象封装
+     * @return 添加状态
+     */
     @PostMapping(path = "add")
     public JSONObject add(Card card){
         logger.info("添加证件丢失信息:{}",card);
         card.setCardTime(new Date());
+        //设置状态为未找到
         card.setCardStatus("no");
         int rs = cardService.saveCard(card);
         JSONObject jsonObject = new JSONObject();

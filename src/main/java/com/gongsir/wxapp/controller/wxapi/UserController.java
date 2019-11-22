@@ -102,6 +102,8 @@ public class UserController {
             res.put("msg","同学你好,欢迎使用西柚失物招领小程序,首次使用请绑定学号,谢谢!");
         }else {
             res.put("code",user.getId());
+            //返回学号
+            res.put("stuNum",user.getStuNum());
         }
         //返回自定义登录状态,加密数据
         res.put("sessionKey", Base64Util.encodeOpenIDAndSessionKey(openid,session_key));
