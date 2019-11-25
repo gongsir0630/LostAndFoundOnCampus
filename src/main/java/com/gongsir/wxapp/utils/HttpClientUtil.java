@@ -67,11 +67,11 @@ public class HttpClientUtil {
         return resultString;
     }
 
-    public static String doGet(String url){
+    static String doGet(String url){
         return doGet(url,null);
     }
 
-    public static String doPost(String url,Map<String,String> param){
+    private static String doPost(String url, Map<String, String> param){
         CloseableHttpClient httpClient = HttpClients.createDefault();
         CloseableHttpResponse response = null;
         String resultString = "";
@@ -110,7 +110,7 @@ public class HttpClientUtil {
         return doPost(url,null);
     }
 
-    public static String doPostJson(String url,String json){
+    static String doPostJson(String url, String json){
         CloseableHttpClient httpClient = HttpClients.createDefault();
         CloseableHttpResponse response = null;
         String resultString = "";

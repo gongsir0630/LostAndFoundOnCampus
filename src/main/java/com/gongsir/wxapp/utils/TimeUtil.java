@@ -12,11 +12,11 @@ import java.util.Date;
 public class TimeUtil {
     /**
      * 根据所给日期返回两日期相差的秒数
-     * @param d1
-     * @param d2
+     * @param d1 开始时间
+     * @param d2 结束时间
      * @return 返回两个日期间隔的毫秒数
      */
-    public static long getSecond(Date d1,Date d2)
+    private static long getSecond(Date d1, Date d2)
     {
         long a1 = d1.getTime();
         long a2 = d2.getTime();
@@ -29,7 +29,7 @@ public class TimeUtil {
      * @param m 秒数
      * @return **时**分**秒
      */
-    public static String getBeapartDate(long m)
+    private static String getBeapartDate(long m)
     {
         String beapartdate="";
         int nDay = (int)m/(24*60*60);

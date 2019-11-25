@@ -5,6 +5,9 @@ import com.baidu.aip.ocr.AipOcr;
 import org.springframework.web.multipart.MultipartFile;
 import java.util.HashMap;
 
+/**
+ * @author gongsir
+ */
 public class OCRUtil {
     /**
      * 设置百度云AppID/AK/SK
@@ -27,7 +30,12 @@ public class OCRUtil {
         return null;
     }
 
-    //001、身份证识别
+    /**
+     * 身份证识别
+     * @param file image
+     * @return info
+     * @throws Exception exception
+     */
     private static JSONObject idCard(MultipartFile file) throws Exception{
         //将文件转化为二进制
         byte[] buf = file.getBytes();
@@ -39,7 +47,12 @@ public class OCRUtil {
         return JSONObject.parseObject(res);
     }
 
-    //002、学生卡识别
+    /**
+     * 学生证识别
+     * @param file 学生证证件图片
+     * @return 识别信息json
+     * @throws Exception 异常
+     */
     private static JSONObject stuCard(MultipartFile file) throws Exception{
 //        将文件转为二进制
         byte[] buf = file.getBytes();

@@ -60,7 +60,7 @@ public class UserUtil {
         //封装模板消息
         JSONObject jsonObject1 = new JSONObject();
         jsonObject1.put("touser",Base64Util.decodeData(openid));
-        jsonObject1.put("template_id", UserConstantInterface.Template_ID);
+        jsonObject1.put("template_id", UserConstantInterface.TEMPLATE_ID);
         jsonObject1.put("form_id",formid);
 
         JSONObject jsonObject2 = new JSONObject();
@@ -103,7 +103,7 @@ public class UserUtil {
 
         logger.info(token.get("access_token").toString());
         logger.info(jsonObject1.toJSONString());
-        return MessagePush.Push(jsonObject1.toJSONString(), token.get("access_token").toString());
+        return MessagePush.push(jsonObject1.toJSONString(), token.get("access_token").toString());
     }
 
     /**

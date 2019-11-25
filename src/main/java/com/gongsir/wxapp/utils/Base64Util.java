@@ -39,7 +39,7 @@ public class Base64Util {
      * @param inputData 加密字符串
      * @return 解密后的串
      */
-    public static String decodeData(String inputData) {
+    static String decodeData(String inputData) {
         try {
             if (null == inputData) {
                 return null;

@@ -55,10 +55,11 @@ public class UserController {
     @PostMapping(path = "login")
     public JSONObject wxLogin(@RequestParam("code") String code,
                               @RequestParam(value = "nickName") String name,
-                              @RequestParam("headImg")String headImg){
+                              @RequestParam("headImg")String headImg,
+                              @RequestParam(value = "app",defaultValue = "wx")String app){
         Map<String,String> param = new HashMap<>();
         //封装请求参数
-        param.put("appid", UserConstantInterface.WX_LOGIN_AppID);
+        param.put("appid", UserConstantInterface.WX_APPID);
         param.put("secret",UserConstantInterface.WX_LOGIN_SECRET);
         param.put("js_code",code);
         param.put("grant_type",UserConstantInterface.WX_LOGIN__GRANT_TYPE);

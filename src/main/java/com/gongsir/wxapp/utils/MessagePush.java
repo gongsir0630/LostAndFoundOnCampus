@@ -5,7 +5,10 @@ import com.gongsir.wxapp.configuration.UserConstantInterface;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class MessagePush {
+/**
+ * @author gongsir
+ */
+class MessagePush {
     private static final Logger logger = LoggerFactory.getLogger(MessagePush.class);
 
     /**
@@ -14,7 +17,7 @@ public class MessagePush {
      * @param accessToken access_token
      * @return 返回发送成功/失败状态
      */
-    public static boolean Push(String params, String accessToken) {
+    static boolean push(String params, String accessToken) {
         boolean flag = false;
         String url = UserConstantInterface.PUSH_URL + accessToken;
         String result = HttpClientUtil.doPostJson(url, params);
@@ -32,14 +35,10 @@ public class MessagePush {
         return flag;
     }
 
-
-    public static JSONObject getAccessToken() {
-        String url = UserConstantInterface.ACCESS_TOKEN_URL + "&appid=" + UserConstantInterface.WX_LOGIN_AppID + "&secret=" + UserConstantInterface.WX_LOGIN_SECRET;
+    static JSONObject getAccessToken() {
+        String url = UserConstantInterface.ACCESS_TOKEN_URL + "&appid=" + UserConstantInterface.WX_APPID + "&secret=" + UserConstantInterface.WX_LOGIN_SECRET;
         String result = HttpClientUtil.doGet(url);
         JSONObject jsonObject = JSONObject.parseObject(result);
         return jsonObject;
     }
-
-
-
 }
