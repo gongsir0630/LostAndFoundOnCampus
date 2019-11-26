@@ -237,14 +237,20 @@ public class GoodController {
         return jsonObject;
     }
 
+    /**
+     * 物品认领，一旦被人认领，不再显示在主界面，通过学号认领
+     * @param stuNum 认领者学号
+     * @param gid 认领的物品的唯一id
+     * @return 返回认领状态
+     */
     @PostMapping(path = "found")
-    public JSONObject foundByStuNum(@RequestParam("stuNum")String stuNum,@RequestParam("gid")int id){
+    public JSONObject foundByStuNum(@RequestParam("stuNum")String stuNum,@RequestParam("gid")int gid){
         JSONObject jsonObject = new JSONObject();
         int rs = 0;
-        Good good1 = goodService.selectBGoodyPk(id);
+        Good good1 = goodService.selectBGoodyPk(gid);
         if ("no".equalsIgnoreCase(good1.getGoodStatus())){
             Good good = new Good();
-            good.setId(id);
+            good.setId(gid);
             good.setGoodStatus(stuNum);
             rs = goodService.updateGoodByPk(good);
         }

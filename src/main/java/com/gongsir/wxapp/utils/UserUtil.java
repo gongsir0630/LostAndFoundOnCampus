@@ -28,32 +28,33 @@ public class UserUtil {
     /**
      * 请求微信接口需要的全局access_token
      */
-    private static JSONObject token = null;
+    private static JSONObject wxToken = null;
+    private static JSONObject qqToken = null;
 
     private static SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
     /**
-     * 推送模板消息给用户
+     * 微信推送模板消息给用户
      * @param openid 用户信息(加密后的)
      * @param card 证件信息
      * @param formid form表单id
      * @return 操作成功与否
      */
-    public static boolean messagePush(String openid, Card card, String formid){
-        logger.info("=====> 调用messagePush开始推送消息通知");
-        if (token==null){
-            token = MessagePush.getAccessToken();
-            token.put("getTime",System.currentTimeMillis());
-            if (token.get("access_token")==null || token.get("access_token").toString().equals("")){
+    public static boolean wxMessagePush(String openid, Card card, String formid){
+        logger.info("=====> 调用messagePush开始推送微信消息通知");
+        if (wxToken==null){
+            wxToken = WxMessagePush.getAccessToken("wx");
+            wxToken.put("getTime",System.currentTimeMillis());
+            if (wxToken.get("access_token")==null || wxToken.get("access_token").toString().equals("")){
                 logger.error("=====> 获取access_token失败");
                 return false;
             }
         }else {
             //如果token失效，重新获取
-            long dx = System.currentTimeMillis()-Long.parseLong(token.get("getTime").toString());
-            if (dx/1000 >= Long.parseLong(token.get("expires_in").toString())){
-                token = MessagePush.getAccessToken();
-                token.put("getTime",System.currentTimeMillis());
+            long dx = System.currentTimeMillis()-Long.parseLong(wxToken.get("getTime").toString());
+            if (dx/1000 >= Long.parseLong(wxToken.get("expires_in").toString())){
+                wxToken = WxMessagePush.getAccessToken("wx");
+                wxToken.put("getTime",System.currentTimeMillis());
             }
         }
 
@@ -101,9 +102,71 @@ public class UserUtil {
         logger.info(jsonObject2.toJSONString());
         jsonObject1.put("data",jsonObject2);
 
-        logger.info(token.get("access_token").toString());
+        logger.info(wxToken.get("access_token").toString());
         logger.info(jsonObject1.toJSONString());
-        return MessagePush.push(jsonObject1.toJSONString(), token.get("access_token").toString());
+        return WxMessagePush.push(jsonObject1.toJSONString(), wxToken.get("access_token").toString(),"wx");
+    }
+
+    /**
+     * QQ推送模板消息给用户
+     * @param openid 用户信息(加密后的)
+     * @param card 证件信息
+     * @param formid form表单id
+     * @return 操作成功与否
+     */
+    public static boolean qqMessagePush(String openid, Card card, String formid){
+        logger.info("=====> 调用messagePush开始推送QQ消息通知");
+        if (qqToken==null){
+            qqToken = WxMessagePush.getAccessToken("qq");
+            qqToken.put("getTime",System.currentTimeMillis());
+            if (qqToken.get("access_token")==null || qqToken.get("access_token").toString().equals("")){
+                logger.error("=====> 获取access_token失败");
+                return false;
+            }
+        }else {
+            //如果token失效，重新获取
+            long dx = System.currentTimeMillis()-Long.parseLong(qqToken.get("getTime").toString());
+            if (dx/1000 >= Long.parseLong(qqToken.get("expires_in").toString())){
+                qqToken = WxMessagePush.getAccessToken("qq");
+                qqToken.put("getTime",System.currentTimeMillis());
+            }
+        }
+
+        //封装模板消息
+        JSONObject jsonObject1 = new JSONObject();
+        jsonObject1.put("touser",Base64Util.decodeData(openid));
+        jsonObject1.put("template_id", UserConstantInterface.QQ_TEMPLATE_ID);
+        jsonObject1.put("form_id",formid);
+
+        JSONObject jsonObject2 = new JSONObject();
+        JSONObject jsonObject3 = new JSONObject();
+
+        //证件类型
+        if ("stuCard".equals(card.getCardType())){
+            jsonObject3.put("value","西南石油校园一卡通 / stuCard");
+        }else {
+            jsonObject3.put("value","身份证 / idCard");
+        }
+        jsonObject2.put("keyword1",jsonObject3);
+
+        //证件信息
+        jsonObject3 = new JSONObject();
+        jsonObject3.put("value","证件号:"+card.getCardNum()+"\n\n姓  名:"+card.getCardName());
+        jsonObject2.put("keyword2",jsonObject3);
+
+
+        //联系方式
+        jsonObject3 = new JSONObject();
+        jsonObject3.put("value",card.getRelation().replaceFirst("place","指定地点领取"));
+        jsonObject2.put("keyword3",jsonObject3);
+
+
+        logger.info(jsonObject2.toJSONString());
+        jsonObject1.put("data",jsonObject2);
+
+        logger.info(qqToken.get("access_token").toString());
+        logger.info(jsonObject1.toJSONString());
+        return WxMessagePush.push(jsonObject1.toJSONString(), qqToken.get("access_token").toString(),"qq");
     }
 
     /**

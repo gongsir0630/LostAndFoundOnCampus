@@ -3,6 +3,7 @@ package com.gongsir.wxapp.controller.wxapi;
 import com.alibaba.fastjson.JSONObject;
 import com.gongsir.wxapp.model.Card;
 import com.gongsir.wxapp.model.Listen;
+import com.gongsir.wxapp.model.User;
 import com.gongsir.wxapp.service.CardService;
 import com.gongsir.wxapp.service.ListenService;
 import com.gongsir.wxapp.service.UserService;
@@ -32,6 +33,8 @@ public class CardController {
     CardService cardService;
     @Resource
     ListenService listenService;
+    @Resource
+    UserService userService;
 
     /**
      * 证件识别接口
@@ -73,7 +76,11 @@ public class CardController {
             if (!listens.isEmpty()){
                 for (Listen lis :
                         listens) {
-                    flag = UserUtil.messagePush(lis.getOpenid(),card,lis.getFormId());
+                    if ("wx".equals(userService.selectUserByOpenID(lis.getOpenid()).getUserApp())){
+                        flag = UserUtil.wxMessagePush(lis.getOpenid(),card,lis.getFormId());
+                    }else {
+                        flag = UserUtil.qqMessagePush(lis.getOpenid(),card,lis.getFormId());
+                    }
                 }
             }
             //消息是否推送成功
@@ -105,11 +112,36 @@ public class CardController {
      * @return goods集合
      */
     @GetMapping(path = "my")
-    public JSONObject myAdd(@RequestParam("sessionKey") String sessionKey,
+    public JSONObject myCard(@RequestParam("sessionKey") String sessionKey,
                             @RequestParam("page") int page,
                             @RequestParam("limit") int limit){
         JSONObject jsonObject = new JSONObject();
         String openid = Base64Util.encodeData(Base64Util.decode2Array(sessionKey)[0]);
+        return getJsonObject(page,limit,openid,jsonObject);
+    }
+
+    /**
+     * 查询用户已经发布的所有证件信息
+     * @param openid 身份认证标识
+     * @param page 页码
+     * @param limit 每页显示数量
+     * @return goods集合
+     */
+    @GetMapping(path = "his")
+    public JSONObject hisCard(@RequestParam("openid") String openid,
+                            @RequestParam("page") int page,
+                            @RequestParam("limit") int limit){
+        JSONObject jsonObject = new JSONObject();
+        return getJsonObject(page,limit,openid,jsonObject);
+    }
+
+    private JSONObject getJsonObject(@RequestParam("page") int page, @RequestParam("limit") int limit, @RequestParam("openid") String openid, JSONObject jsonObject) {
+        List<Card> cards = cardService.selectByOpenId(openid, page, limit);
+        User user = userService.selectUserByOpenID(openid);
+        cards.forEach(card -> card.setUser(user));
+        jsonObject.put("count",cardService.countByOpenId(openid));
+        jsonObject.put("msg","data access success");
+        jsonObject.put("cards",cards);
         return jsonObject;
     }
 }

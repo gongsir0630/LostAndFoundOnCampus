@@ -5,6 +5,7 @@ import com.gongsir.wxapp.model.Card;
 import com.gongsir.wxapp.model.Listen;
 import com.gongsir.wxapp.service.CardService;
 import com.gongsir.wxapp.service.ListenService;
+import com.gongsir.wxapp.service.UserService;
 import com.gongsir.wxapp.utils.Base64Util;
 import com.gongsir.wxapp.utils.UserUtil;
 import org.slf4j.Logger;
@@ -33,6 +34,8 @@ public class ListenController {
     private ListenService listenService;
     @Resource
     private CardService cardService;
+    @Resource
+    private UserService userService;
 
     @PostMapping(path = "listen")
     public JSONObject listenCard(Listen listen,
@@ -79,7 +82,12 @@ public class ListenController {
         jsonObject.put("msg","已为你找到相关的证件信息");
         jsonObject.put("cards",cards);
         //推送消息通知
-        boolean b = UserUtil.messagePush(Base64Util.encodeData(Base64Util.decode2Array(sessionKey)[0]), cards.get(0), listen.getFormId());
+        boolean b;
+        if ("wx".equalsIgnoreCase(userService.selectUserByOpenID(Base64Util.encodeData(Base64Util.decode2Array(sessionKey)[0])).getUserApp())){
+            b = UserUtil.wxMessagePush(Base64Util.encodeData(Base64Util.decode2Array(sessionKey)[0]), cards.get(0), listen.getFormId());
+        }else {
+            b = UserUtil.qqMessagePush(Base64Util.encodeData(Base64Util.decode2Array(sessionKey)[0]), cards.get(0), listen.getFormId());
+        }
         if (b){
             jsonObject.put("pushMsg","消息推送成功");
             LOGGER.info("返回信息:{}",jsonObject);

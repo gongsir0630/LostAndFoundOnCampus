@@ -50,6 +50,7 @@ public class UserController {
      * @param code 小程序登录code
      * @param name 微信昵称
      * @param headImg 微信头像
+     * @param app 小程序类型，微信或者QQ，微:wx QQ:qq
      * @return 返回自定义登录状态
      */
     @PostMapping(path = "login")

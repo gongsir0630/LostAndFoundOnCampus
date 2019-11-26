@@ -6,11 +6,8 @@ import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-
-import static org.junit.Assert.*;
 
 /**
  * @author 龚涛
@@ -36,6 +33,6 @@ public class UserUtilTest {
         card.setCardType("学生卡");
         card.setId(1);
         card.setRelation("电话:83035678");
-        System.out.println(UserUtil.messagePush(openid,card,formid));
+        System.out.println(UserUtil.wxMessagePush(openid,card,formid));
     }
 }
