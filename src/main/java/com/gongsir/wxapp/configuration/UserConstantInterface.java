@@ -39,4 +39,25 @@ public interface UserConstantInterface {
      * 微信消息模板的ID
      */
     public static final String TEMPLATE_ID = "_UrYFmB6FgMZPLyQLJ9n7sTGEQLUD8wCvZZTbh-f3a4";
+
+    /**
+     * 请求的wxApi
+     */
+    public static final String QQ_LOGIN_URL = "https://api.q.qq.com/sns/jscode2session";
+
+    /**
+     * QQ AppID
+     */
+    public static final String QQ_APPID = "1110061270";
+
+    /**
+     * QQ小程序secret
+     */
+    public static final String QQ_LOGIN_SECRET = "uTU6nJV0FyM9GpOw";
+
+    /**
+     * 小程序登录模式
+     */
+    public static final String QQ_LOGIN__GRANT_TYPE = "authorization_code";
+
 }

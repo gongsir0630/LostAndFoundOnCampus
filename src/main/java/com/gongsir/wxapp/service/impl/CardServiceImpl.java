@@ -3,6 +3,7 @@ package com.gongsir.wxapp.service.impl;
 import com.gongsir.wxapp.mapper.CardMapper;
 import com.gongsir.wxapp.model.Card;
 import com.gongsir.wxapp.model.CardExample;
+import com.gongsir.wxapp.model.Good;
 import com.gongsir.wxapp.service.CardService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -32,6 +33,11 @@ public class CardServiceImpl implements CardService {
     public int saveCard(Card card) {
         logger.info("CardServiceImpl插入数据:{}",card);
         return cardMapper.insert(card);
+    }
+
+    @Override
+    public int deleteByPrimaryKey(Integer id) {
+        return cardMapper.deleteByPrimaryKey(id);
     }
 
     /**
@@ -67,5 +73,26 @@ public class CardServiceImpl implements CardService {
     @Override
     public int updateByPk(Card card) {
         return cardMapper.updateByPrimaryKeySelective(card);
+    }
+
+    @Override
+    public List<Card> selectByOpenId(String openid, int page, int limit) {
+        page = Math.max(page,1);
+        int offset = (page-1)*limit;
+        CardExample example = new CardExample();
+        CardExample.Criteria criteria = example.createCriteria();
+        criteria.andOpenidEqualTo(openid);
+        example.setOffset(offset);
+        example.setLimit(limit);
+        example.setOrderByClause("id desc");
+        return cardMapper.selectByExample(example);
+    }
+
+    @Override
+    public long countByOpenId(String openid) {
+        CardExample example = new CardExample();
+        CardExample.Criteria criteria = example.createCriteria();
+        criteria.andOpenidEqualTo(openid);
+        return cardMapper.countByExample(example);
     }
 }

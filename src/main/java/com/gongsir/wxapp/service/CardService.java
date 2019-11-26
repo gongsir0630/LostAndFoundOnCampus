@@ -1,6 +1,7 @@
 package com.gongsir.wxapp.service;
 
 import com.gongsir.wxapp.model.Card;
+import com.gongsir.wxapp.model.Good;
 
 import java.util.List;
 
@@ -16,6 +17,13 @@ public interface CardService {
      * @return 返回主键id
      */
     int saveCard(Card card);
+
+    /**
+     * 根据主键id删除物品信息
+     * @param id 主键pk
+     * @return 记录数
+     */
+    int deleteByPrimaryKey(Integer id);
 
     /**
      * 通过id查找证件信息
@@ -38,4 +46,20 @@ public interface CardService {
      * @return 成功记录数
      */
     int updateByPk(Card card);
+
+    /**
+     * 通过openID查找用户发布的信息
+     * @param openid 用户表示
+     * @param page 页码
+     * @param limit 每页显示数量
+     * @return list集合
+     */
+    List<Card> selectByOpenId(String openid, int page, int limit);
+
+    /**
+     * 分页数量
+     * @param openid 用户id
+     * @return int
+     */
+    long countByOpenId(String openid);
 }

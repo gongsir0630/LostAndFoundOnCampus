@@ -58,15 +58,27 @@ public class UserController {
                               @RequestParam("headImg")String headImg,
                               @RequestParam(value = "app",defaultValue = "wx")String app){
         Map<String,String> param = new HashMap<>();
-        //封装请求参数
-        param.put("appid", UserConstantInterface.WX_APPID);
-        param.put("secret",UserConstantInterface.WX_LOGIN_SECRET);
-        param.put("js_code",code);
-        param.put("grant_type",UserConstantInterface.WX_LOGIN__GRANT_TYPE);
-        //调用微信接口
-        String wxResult = HttpClientUtil.doGet(UserConstantInterface.WX_LOGIN_URL,param);
-        JSONObject jsonObject = JSONObject.parseObject(wxResult);
-        logger.info("wxResult:{}",jsonObject);
+        //接收微信或者qq接口处理结果
+        String result = null;
+        if ("qq".equals(app)){
+            //封装请求参数
+            param.put("appid", UserConstantInterface.QQ_APPID);
+            param.put("secret",UserConstantInterface.QQ_LOGIN_SECRET);
+            param.put("js_code",code);
+            param.put("grant_type",UserConstantInterface.QQ_LOGIN__GRANT_TYPE);
+            //调用QQ接口
+            result = HttpClientUtil.doGet(UserConstantInterface.QQ_LOGIN_URL,param);
+        }else {
+            //封装请求参数
+            param.put("appid", UserConstantInterface.WX_APPID);
+            param.put("secret",UserConstantInterface.WX_LOGIN_SECRET);
+            param.put("js_code",code);
+            param.put("grant_type",UserConstantInterface.WX_LOGIN__GRANT_TYPE);
+            //调用微信接口
+            result = HttpClientUtil.doGet(UserConstantInterface.WX_LOGIN_URL,param);
+        }
+        JSONObject jsonObject = JSONObject.parseObject(result);
+        logger.info("apiResult:{}",jsonObject);
         if (jsonObject.containsKey("errcode") && Integer.parseInt(jsonObject.get("errcode").toString())!=0){
             logger.info("=====>>接口信息错误:"+jsonObject.get("errcode")+","+jsonObject.get("errmsg"));
             JSONObject response = new JSONObject();

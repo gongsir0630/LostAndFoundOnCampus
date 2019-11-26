@@ -31,8 +31,6 @@ public class CardController {
     @Resource
     CardService cardService;
     @Resource
-    UserService userService;
-    @Resource
     ListenService listenService;
 
     /**
@@ -55,8 +53,11 @@ public class CardController {
      * @return 添加状态
      */
     @PostMapping(path = "add")
-    public JSONObject add(Card card){
+    public JSONObject add(@RequestParam("sessionKey")String sessionKey,
+                          Card card){
         logger.info("添加证件丢失信息:{}",card);
+        //解析出openID,然后加密存进数据库
+        card.setOpenid(Base64Util.encodeData(Base64Util.decode2Array(sessionKey)[0]));
         card.setCardTime(new Date());
         //设置状态为未找到
         card.setCardStatus("no");
@@ -97,7 +98,7 @@ public class CardController {
     }
 
     /**
-     * 查询用户自己已经发布的所有信息
+     * 查询用户自己已经发布的所有证件信息
      * @param sessionKey 身份认证标识
      * @param page 页码
      * @param limit 每页显示数量
