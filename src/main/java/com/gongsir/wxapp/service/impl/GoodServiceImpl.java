@@ -166,7 +166,8 @@ public class GoodServiceImpl implements GoodService {
         GoodExample example = new GoodExample();
         GoodExample.Criteria criteria = example.createCriteria();
         criteria.andGoodTitleLike('%'+keyword+'%');
-        example.or(example.createCriteria().andGoodTextsLike('%'+keyword+'%'));
+        criteria.andGoodStatusEqualTo("no");
+        example.or(example.createCriteria().andGoodTextsLike('%'+keyword+'%').andGoodStatusEqualTo("no"));
         example.setOffset(offset);
         example.setLimit(limit);
         example.setOrderByClause("id desc");
@@ -178,7 +179,8 @@ public class GoodServiceImpl implements GoodService {
         GoodExample example = new GoodExample();
         GoodExample.Criteria criteria = example.createCriteria();
         criteria.andGoodTitleLike('%'+keyword+'%');
-        example.or(example.createCriteria().andGoodTextsLike('%'+keyword+'%'));
+        criteria.andGoodStatusEqualTo("no");
+        example.or(example.createCriteria().andGoodTextsLike('%'+keyword+'%').andGoodStatusEqualTo("no"));
         return goodMapper.countByExample(example);
     }
 }

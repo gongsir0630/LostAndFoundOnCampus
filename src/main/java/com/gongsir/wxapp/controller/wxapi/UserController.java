@@ -90,6 +90,7 @@ public class UserController {
                 //过滤微信昵称的emoji表情
                 user.setUserName(EmojiParser.removeAllEmojis(name));
                 user.setUserHead(headImg);
+                user.setUserApp(app);
                 userService.saveUser(user);
             }
         }catch (SQLException e){

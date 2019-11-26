@@ -48,6 +48,9 @@ public class GoodController {
 
     /**
      * 返回所有的goods数据
+     * @param page 页数
+     * @param limit 数量
+     * @param sort 排序规则，sort=1 升序，sort=2 降序
      * @return list集合
      */
     @GetMapping("all")
