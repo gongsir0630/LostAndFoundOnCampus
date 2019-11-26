@@ -1,0 +1,299 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gongsir.wxapp.mapper.GoodMapper">
+  <resultMap id="BaseResultMap" type="com.gongsir.wxapp.model.Good">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="openid" jdbcType="VARCHAR" property="openid" />
+    <result column="good_title" jdbcType="VARCHAR" property="goodTitle" />
+    <result column="good_texts" jdbcType="VARCHAR" property="goodTexts" />
+    <result column="good_class" jdbcType="VARCHAR" property="goodClass" />
+    <result column="good_image" jdbcType="VARCHAR" property="goodImage" />
+    <result column="relation" jdbcType="VARCHAR" property="relation" />
+    <result column="good_type" jdbcType="VARCHAR" property="goodType" />
+    <result column="time" jdbcType="TIMESTAMP" property="time" />
+    <result column="good_status" jdbcType="VARCHAR" property="goodStatus" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, openid, good_title, good_texts, good_class, good_image, relation, good_type, 
+    time, good_status
+  </sql>
+  <select id="selectByExample" parameterType="com.gongsir.wxapp.model.GoodExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from good
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+    <if test="limit != null">
+      <if test="offset != null">
+        limit ${offset}, ${limit}
+      </if>
+      <if test="offset == null">
+        limit ${limit}
+      </if>
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from good
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from good
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.gongsir.wxapp.model.GoodExample">
+    delete from good
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.gongsir.wxapp.model.Good">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into good (openid, good_title, good_texts, 
+      good_class, good_image, relation, 
+      good_type, time, good_status
+      )
+    values (#{openid,jdbcType=VARCHAR}, #{goodTitle,jdbcType=VARCHAR}, #{goodTexts,jdbcType=VARCHAR}, 
+      #{goodClass,jdbcType=VARCHAR}, #{goodImage,jdbcType=VARCHAR}, #{relation,jdbcType=VARCHAR}, 
+      #{goodType,jdbcType=VARCHAR}, #{time,jdbcType=TIMESTAMP}, #{goodStatus,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.gongsir.wxapp.model.Good">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into good
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="openid != null">
+        openid,
+      </if>
+      <if test="goodTitle != null">
+        good_title,
+      </if>
+      <if test="goodTexts != null">
+        good_texts,
+      </if>
+      <if test="goodClass != null">
+        good_class,
+      </if>
+      <if test="goodImage != null">
+        good_image,
+      </if>
+      <if test="relation != null">
+        relation,
+      </if>
+      <if test="goodType != null">
+        good_type,
+      </if>
+      <if test="time != null">
+        time,
+      </if>
+      <if test="goodStatus != null">
+        good_status,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="openid != null">
+        #{openid,jdbcType=VARCHAR},
+      </if>
+      <if test="goodTitle != null">
+        #{goodTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="goodTexts != null">
+        #{goodTexts,jdbcType=VARCHAR},
+      </if>
+      <if test="goodClass != null">
+        #{goodClass,jdbcType=VARCHAR},
+      </if>
+      <if test="goodImage != null">
+        #{goodImage,jdbcType=VARCHAR},
+      </if>
+      <if test="relation != null">
+        #{relation,jdbcType=VARCHAR},
+      </if>
+      <if test="goodType != null">
+        #{goodType,jdbcType=VARCHAR},
+      </if>
+      <if test="time != null">
+        #{time,jdbcType=TIMESTAMP},
+      </if>
+      <if test="goodStatus != null">
+        #{goodStatus,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.gongsir.wxapp.model.GoodExample" resultType="java.lang.Long">
+    select count(*) from good
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update good
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.openid != null">
+        openid = #{record.openid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.goodTitle != null">
+        good_title = #{record.goodTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="record.goodTexts != null">
+        good_texts = #{record.goodTexts,jdbcType=VARCHAR},
+      </if>
+      <if test="record.goodClass != null">
+        good_class = #{record.goodClass,jdbcType=VARCHAR},
+      </if>
+      <if test="record.goodImage != null">
+        good_image = #{record.goodImage,jdbcType=VARCHAR},
+      </if>
+      <if test="record.relation != null">
+        relation = #{record.relation,jdbcType=VARCHAR},
+      </if>
+      <if test="record.goodType != null">
+        good_type = #{record.goodType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.time != null">
+        time = #{record.time,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.goodStatus != null">
+        good_status = #{record.goodStatus,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update good
+    set id = #{record.id,jdbcType=INTEGER},
+      openid = #{record.openid,jdbcType=VARCHAR},
+      good_title = #{record.goodTitle,jdbcType=VARCHAR},
+      good_texts = #{record.goodTexts,jdbcType=VARCHAR},
+      good_class = #{record.goodClass,jdbcType=VARCHAR},
+      good_image = #{record.goodImage,jdbcType=VARCHAR},
+      relation = #{record.relation,jdbcType=VARCHAR},
+      good_type = #{record.goodType,jdbcType=VARCHAR},
+      time = #{record.time,jdbcType=TIMESTAMP},
+      good_status = #{record.goodStatus,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.gongsir.wxapp.model.Good">
+    update good
+    <set>
+      <if test="openid != null">
+        openid = #{openid,jdbcType=VARCHAR},
+      </if>
+      <if test="goodTitle != null">
+        good_title = #{goodTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="goodTexts != null">
+        good_texts = #{goodTexts,jdbcType=VARCHAR},
+      </if>
+      <if test="goodClass != null">
+        good_class = #{goodClass,jdbcType=VARCHAR},
+      </if>
+      <if test="goodImage != null">
+        good_image = #{goodImage,jdbcType=VARCHAR},
+      </if>
+      <if test="relation != null">
+        relation = #{relation,jdbcType=VARCHAR},
+      </if>
+      <if test="goodType != null">
+        good_type = #{goodType,jdbcType=VARCHAR},
+      </if>
+      <if test="time != null">
+        time = #{time,jdbcType=TIMESTAMP},
+      </if>
+      <if test="goodStatus != null">
+        good_status = #{goodStatus,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.gongsir.wxapp.model.Good">
+    update good
+    set openid = #{openid,jdbcType=VARCHAR},
+      good_title = #{goodTitle,jdbcType=VARCHAR},
+      good_texts = #{goodTexts,jdbcType=VARCHAR},
+      good_class = #{goodClass,jdbcType=VARCHAR},
+      good_image = #{goodImage,jdbcType=VARCHAR},
+      relation = #{relation,jdbcType=VARCHAR},
+      good_type = #{goodType,jdbcType=VARCHAR},
+      time = #{time,jdbcType=TIMESTAMP},
+      good_status = #{goodStatus,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>
