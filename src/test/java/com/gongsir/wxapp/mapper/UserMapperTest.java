@@ -1,8 +1,6 @@
 package com.gongsir.wxapp.mapper;
 
 import com.gongsir.wxapp.WxappApplication;
-import com.gongsir.wxapp.model.User;
-import com.gongsir.wxapp.model.UserExample;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.slf4j.Logger;

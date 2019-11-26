@@ -1,7 +1,5 @@
 package com.gongsir.wxapp.service;
 
-import com.gongsir.wxapp.model.User;
-
 import java.sql.SQLException;
 import java.util.List;
 

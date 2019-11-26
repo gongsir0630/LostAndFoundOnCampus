@@ -1,8 +1,5 @@
 package com.gongsir.wxapp.service.impl;
 
-import com.gongsir.wxapp.mapper.UserMapper;
-import com.gongsir.wxapp.model.User;
-import com.gongsir.wxapp.model.UserExample;
 import com.gongsir.wxapp.service.UserService;
 import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
