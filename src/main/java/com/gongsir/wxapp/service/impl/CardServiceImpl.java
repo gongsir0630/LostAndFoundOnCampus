@@ -63,4 +63,9 @@ public class CardServiceImpl implements CardService {
         example.setOrderByClause("id desc");
         return cardMapper.selectByExample(example);
     }
+
+    @Override
+    public int updateByPk(Card card) {
+        return cardMapper.updateByPrimaryKeySelective(card);
+    }
 }

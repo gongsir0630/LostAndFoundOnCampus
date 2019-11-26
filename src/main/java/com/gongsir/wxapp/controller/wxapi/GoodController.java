@@ -234,4 +234,28 @@ public class GoodController {
         return jsonObject;
     }
 
+    @PostMapping(path = "found")
+    public JSONObject foundByStuNum(@RequestParam("stuNum")String stuNum,@RequestParam("gid")int id){
+        JSONObject jsonObject = new JSONObject();
+        int rs = 0;
+        Good good1 = goodService.selectBGoodyPk(id);
+        if ("no".equalsIgnoreCase(good1.getGoodStatus())){
+            Good good = new Good();
+            good.setId(id);
+            good.setGoodStatus(stuNum);
+            rs = goodService.updateGoodByPk(good);
+        }
+        if (rs>0){
+            jsonObject.put("code",rs);
+            jsonObject.put("msg", "操作成功");
+        }else if (rs==0){
+            jsonObject.put("code",rs);
+            jsonObject.put("msg", "操作失败");
+        }else {
+            jsonObject.put("code", 1024);
+            jsonObject.put("msg","对不起，该物品已被人认领");
+        }
+        return jsonObject;
+    }
+
 }

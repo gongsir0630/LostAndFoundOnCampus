@@ -31,4 +31,11 @@ public interface CardService {
      * @return list集合
      */
     List<Card> selectByNumAndStatus(String num,String status);
+
+    /**
+     * 更新非空信息
+     * @param card 更新的信息
+     * @return 成功记录数
+     */
+    int updateByPk(Card card);
 }

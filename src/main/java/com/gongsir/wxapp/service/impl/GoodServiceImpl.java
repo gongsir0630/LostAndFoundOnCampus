@@ -101,7 +101,8 @@ public class GoodServiceImpl implements GoodService {
         int offset= (page-1)*limit;
         GoodExample example = new GoodExample();
         GoodExample.Criteria criteria = example.createCriteria();
-        criteria.andIdIsNotNull();
+        //只显示没有找到的物品信息
+        criteria.andGoodStatusEqualTo("no");
         example.setOffset(offset);
         example.setLimit(limit);
         if (sort==1){
@@ -116,7 +117,8 @@ public class GoodServiceImpl implements GoodService {
     public long getAllCount() {
         GoodExample example = new GoodExample();
         GoodExample.Criteria criteria = example.createCriteria();
-        criteria.andIdIsNotNull();
+        //检索未找到的物品信息
+        criteria.andGoodStatusEqualTo("no");
         return goodMapper.countByExample(example);
     }
 
@@ -133,6 +135,7 @@ public class GoodServiceImpl implements GoodService {
         GoodExample example = new GoodExample();
         GoodExample.Criteria criteria = example.createCriteria();
         criteria.andGoodClassEqualTo(goodClass);
+        criteria.andGoodStatusEqualTo("no");
         example.setOffset(offset);
         example.setLimit(limit);
         example.setOrderByClause("id desc");
@@ -144,6 +147,7 @@ public class GoodServiceImpl implements GoodService {
         GoodExample example = new GoodExample();
         GoodExample.Criteria criteria = example.createCriteria();
         criteria.andGoodClassEqualTo(goodClass);
+        criteria.andGoodStatusEqualTo("no");
         return goodMapper.countByExample(example);
     }
 

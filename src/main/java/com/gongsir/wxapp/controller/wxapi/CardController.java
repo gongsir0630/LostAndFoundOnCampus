@@ -6,6 +6,7 @@ import com.gongsir.wxapp.model.Listen;
 import com.gongsir.wxapp.service.CardService;
 import com.gongsir.wxapp.service.ListenService;
 import com.gongsir.wxapp.service.UserService;
+import com.gongsir.wxapp.utils.Base64Util;
 import com.gongsir.wxapp.utils.OCRUtil;
 import com.gongsir.wxapp.utils.UserUtil;
 import org.slf4j.Logger;
@@ -92,6 +93,22 @@ public class CardController {
             jsonObject.put("data",card);
         }
         logger.info("返回信息:{}",jsonObject);
+        return jsonObject;
+    }
+
+    /**
+     * 查询用户自己已经发布的所有信息
+     * @param sessionKey 身份认证标识
+     * @param page 页码
+     * @param limit 每页显示数量
+     * @return goods集合
+     */
+    @GetMapping(path = "my")
+    public JSONObject myAdd(@RequestParam("sessionKey") String sessionKey,
+                            @RequestParam("page") int page,
+                            @RequestParam("limit") int limit){
+        JSONObject jsonObject = new JSONObject();
+        String openid = Base64Util.encodeData(Base64Util.decode2Array(sessionKey)[0]);
         return jsonObject;
     }
 }
