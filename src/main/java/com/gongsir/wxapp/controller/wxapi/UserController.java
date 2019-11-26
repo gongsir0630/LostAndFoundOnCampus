@@ -2,6 +2,7 @@ package com.gongsir.wxapp.controller.wxapi;
 
 import com.alibaba.fastjson.JSONObject;
 import com.gongsir.wxapp.configuration.UserConstantInterface;
+import com.gongsir.wxapp.model.User;
 import com.gongsir.wxapp.service.UserService;
 import com.gongsir.wxapp.utils.Base64Util;
 import com.gongsir.wxapp.utils.HttpClientUtil;
