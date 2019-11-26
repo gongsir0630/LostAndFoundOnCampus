@@ -2,6 +2,7 @@ package com.gongsir.wxapp.model;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.Objects;
 
 /**
  * @author 龚涛
@@ -38,6 +39,11 @@ public class Listen implements Serializable,Comparable<Listen> {
      * 监听时间
      */
     private Date lisTime;
+
+    /**
+     * user
+     */
+    private User user;
 
     private static final long serialVersionUID = 1L;
 
@@ -97,57 +103,50 @@ public class Listen implements Serializable,Comparable<Listen> {
         this.lisTime = lisTime;
     }
 
-    @Override
-    public boolean equals(Object that) {
-        if (this == that) {
-            return true;
-        }
-        if (that == null) {
-            return false;
-        }
-        if (getClass() != that.getClass()) {
-            return false;
-        }
-        Listen other = (Listen) that;
-        return (this.getId() == null ? other.getId() == null : this.getId().equals(other.getId()))
-            && (this.getOpenid() == null ? other.getOpenid() == null : this.getOpenid().equals(other.getOpenid()))
-            && (this.getLisType() == null ? other.getLisType() == null : this.getLisType().equals(other.getLisType()))
-            && (this.getLisNum() == null ? other.getLisNum() == null : this.getLisNum().equals(other.getLisNum()))
-            && (this.getFormId() == null ? other.getFormId() == null : this.getFormId().equals(other.getFormId()))
-            && (this.getLisStatus() == null ? other.getLisStatus() == null : this.getLisStatus().equals(other.getLisStatus()))
-            && (this.getLisTime() == null ? other.getLisTime() == null : this.getLisTime().equals(other.getLisTime()));
+    public User getUser() {
+        return user;
     }
 
-    @Override
-    public int hashCode() {
-        final int prime = 31;
-        int result = 1;
-        result = prime * result + ((getId() == null) ? 0 : getId().hashCode());
-        result = prime * result + ((getOpenid() == null) ? 0 : getOpenid().hashCode());
-        result = prime * result + ((getLisType() == null) ? 0 : getLisType().hashCode());
-        result = prime * result + ((getLisNum() == null) ? 0 : getLisNum().hashCode());
-        result = prime * result + ((getFormId() == null) ? 0 : getFormId().hashCode());
-        result = prime * result + ((getLisStatus() == null) ? 0 : getLisStatus().hashCode());
-        result = prime * result + ((getLisTime() == null) ? 0 : getLisTime().hashCode());
-        return result;
+    public void setUser(User user) {
+        this.user = user;
     }
 
     @Override
     public String toString() {
-        StringBuilder sb = new StringBuilder();
-        sb.append(getClass().getSimpleName());
-        sb.append(" [");
-        sb.append("Hash = ").append(hashCode());
-        sb.append(", id=").append(id);
-        sb.append(", openid=").append(openid);
-        sb.append(", lisType=").append(lisType);
-        sb.append(", lisNum=").append(lisNum);
-        sb.append(", formId=").append(formId);
-        sb.append(", lisStatus=").append(lisStatus);
-        sb.append(", lisTime=").append(lisTime);
-        sb.append(", serialVersionUID=").append(serialVersionUID);
-        sb.append("]");
-        return sb.toString();
+        return "Listen{" +
+                "id=" + id +
+                ", openid='" + openid + '\'' +
+                ", lisType='" + lisType + '\'' +
+                ", lisNum='" + lisNum + '\'' +
+                ", formId='" + formId + '\'' +
+                ", lisStatus='" + lisStatus + '\'' +
+                ", lisTime=" + lisTime +
+                ", user=" + user +
+                '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (!(o instanceof Listen)) {
+            return false;
+        }
+        Listen listen = (Listen) o;
+        return Objects.equals(getId(), listen.getId()) &&
+                Objects.equals(getOpenid(), listen.getOpenid()) &&
+                Objects.equals(getLisType(), listen.getLisType()) &&
+                Objects.equals(getLisNum(), listen.getLisNum()) &&
+                Objects.equals(getFormId(), listen.getFormId()) &&
+                Objects.equals(getLisStatus(), listen.getLisStatus()) &&
+                Objects.equals(getLisTime(), listen.getLisTime()) &&
+                Objects.equals(getUser(), listen.getUser());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getId(), getOpenid(), getLisType(), getLisNum(), getFormId(), getLisStatus(), getLisTime(), getUser());
     }
 
     @Override

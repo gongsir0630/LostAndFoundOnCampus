@@ -2,6 +2,7 @@ package com.gongsir.wxapp.model;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.Objects;
 
 /**
  * @author 龚涛
@@ -153,65 +154,47 @@ public class Good implements Serializable,Comparable<Good> {
     }
 
     @Override
-    public boolean equals(Object that) {
-        if (this == that) {
+    public String toString() {
+        return "Good{" +
+                "id=" + id +
+                ", openid='" + openid + '\'' +
+                ", goodTitle='" + goodTitle + '\'' +
+                ", goodTexts='" + goodTexts + '\'' +
+                ", goodClass='" + goodClass + '\'' +
+                ", goodImage='" + goodImage + '\'' +
+                ", relation='" + relation + '\'' +
+                ", goodType='" + goodType + '\'' +
+                ", time=" + time +
+                ", user=" + user +
+                ", goodStatus='" + goodStatus + '\'' +
+                '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
             return true;
         }
-        if (that == null) {
+        if (!(o instanceof Good)) {
             return false;
         }
-        if (getClass() != that.getClass()) {
-            return false;
-        }
-        Good other = (Good) that;
-        return (this.getId() == null ? other.getId() == null : this.getId().equals(other.getId()))
-            && (this.getOpenid() == null ? other.getOpenid() == null : this.getOpenid().equals(other.getOpenid()))
-            && (this.getGoodTitle() == null ? other.getGoodTitle() == null : this.getGoodTitle().equals(other.getGoodTitle()))
-            && (this.getGoodTexts() == null ? other.getGoodTexts() == null : this.getGoodTexts().equals(other.getGoodTexts()))
-            && (this.getGoodClass() == null ? other.getGoodClass() == null : this.getGoodClass().equals(other.getGoodClass()))
-            && (this.getGoodImage() == null ? other.getGoodImage() == null : this.getGoodImage().equals(other.getGoodImage()))
-            && (this.getRelation() == null ? other.getRelation() == null : this.getRelation().equals(other.getRelation()))
-            && (this.getGoodType() == null ? other.getGoodType() == null : this.getGoodType().equals(other.getGoodType()))
-            && (this.getTime() == null ? other.getTime() == null : this.getTime().equals(other.getTime()))
-            && (this.getGoodStatus() == null ? other.getGoodStatus() == null : this.getGoodStatus().equals(other.getGoodStatus()));
+        Good good = (Good) o;
+        return Objects.equals(getId(), good.getId()) &&
+                Objects.equals(getOpenid(), good.getOpenid()) &&
+                Objects.equals(getGoodTitle(), good.getGoodTitle()) &&
+                Objects.equals(getGoodTexts(), good.getGoodTexts()) &&
+                Objects.equals(getGoodClass(), good.getGoodClass()) &&
+                Objects.equals(getGoodImage(), good.getGoodImage()) &&
+                Objects.equals(getRelation(), good.getRelation()) &&
+                Objects.equals(getGoodType(), good.getGoodType()) &&
+                Objects.equals(getTime(), good.getTime()) &&
+                Objects.equals(getUser(), good.getUser()) &&
+                Objects.equals(getGoodStatus(), good.getGoodStatus());
     }
 
     @Override
     public int hashCode() {
-        final int prime = 31;
-        int result = 1;
-        result = prime * result + ((getId() == null) ? 0 : getId().hashCode());
-        result = prime * result + ((getOpenid() == null) ? 0 : getOpenid().hashCode());
-        result = prime * result + ((getGoodTitle() == null) ? 0 : getGoodTitle().hashCode());
-        result = prime * result + ((getGoodTexts() == null) ? 0 : getGoodTexts().hashCode());
-        result = prime * result + ((getGoodClass() == null) ? 0 : getGoodClass().hashCode());
-        result = prime * result + ((getGoodImage() == null) ? 0 : getGoodImage().hashCode());
-        result = prime * result + ((getRelation() == null) ? 0 : getRelation().hashCode());
-        result = prime * result + ((getGoodType() == null) ? 0 : getGoodType().hashCode());
-        result = prime * result + ((getTime() == null) ? 0 : getTime().hashCode());
-        result = prime * result + ((getGoodStatus() == null) ? 0 : getGoodStatus().hashCode());
-        return result;
-    }
-
-    @Override
-    public String toString() {
-        StringBuilder sb = new StringBuilder();
-        sb.append(getClass().getSimpleName());
-        sb.append(" [");
-        sb.append("Hash = ").append(hashCode());
-        sb.append(", id=").append(id);
-        sb.append(", openid=").append(openid);
-        sb.append(", goodTitle=").append(goodTitle);
-        sb.append(", goodTexts=").append(goodTexts);
-        sb.append(", goodClass=").append(goodClass);
-        sb.append(", goodImage=").append(goodImage);
-        sb.append(", relation=").append(relation);
-        sb.append(", goodType=").append(goodType);
-        sb.append(", time=").append(time);
-        sb.append(", goodStatus=").append(goodStatus);
-        sb.append(", serialVersionUID=").append(serialVersionUID);
-        sb.append("]");
-        return sb.toString();
+        return Objects.hash(getId(), getOpenid(), getGoodTitle(), getGoodTexts(), getGoodClass(), getGoodImage(), getRelation(), getGoodType(), getTime(), getUser(), getGoodStatus());
     }
 
     @Override

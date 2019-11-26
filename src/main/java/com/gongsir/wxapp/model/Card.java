@@ -2,9 +2,10 @@ package com.gongsir.wxapp.model;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.Objects;
 
 /**
- * @author 
+ * @author 龚涛
  */
 public class Card implements Serializable,Comparable<Card> {
     private Integer id;
@@ -43,6 +44,11 @@ public class Card implements Serializable,Comparable<Card> {
      * 状态:ok/no
      */
     private String cardStatus;
+
+    /**
+     * user
+     */
+    private User user;
 
     private static final long serialVersionUID = 1L;
 
@@ -110,60 +116,27 @@ public class Card implements Serializable,Comparable<Card> {
         this.cardStatus = cardStatus;
     }
 
-    @Override
-    public boolean equals(Object that) {
-        if (this == that) {
-            return true;
-        }
-        if (that == null) {
-            return false;
-        }
-        if (getClass() != that.getClass()) {
-            return false;
-        }
-        Card other = (Card) that;
-        return (this.getId() == null ? other.getId() == null : this.getId().equals(other.getId()))
-            && (this.getOpenid() == null ? other.getOpenid() == null : this.getOpenid().equals(other.getOpenid()))
-            && (this.getCardType() == null ? other.getCardType() == null : this.getCardType().equals(other.getCardType()))
-            && (this.getCardNum() == null ? other.getCardNum() == null : this.getCardNum().equals(other.getCardNum()))
-            && (this.getCardName() == null ? other.getCardName() == null : this.getCardName().equals(other.getCardName()))
-            && (this.getRelation() == null ? other.getRelation() == null : this.getRelation().equals(other.getRelation()))
-            && (this.getCardTime() == null ? other.getCardTime() == null : this.getCardTime().equals(other.getCardTime()))
-            && (this.getCardStatus() == null ? other.getCardStatus() == null : this.getCardStatus().equals(other.getCardStatus()));
+    public User getUser() {
+        return user;
     }
 
-    @Override
-    public int hashCode() {
-        final int prime = 31;
-        int result = 1;
-        result = prime * result + ((getId() == null) ? 0 : getId().hashCode());
-        result = prime * result + ((getOpenid() == null) ? 0 : getOpenid().hashCode());
-        result = prime * result + ((getCardType() == null) ? 0 : getCardType().hashCode());
-        result = prime * result + ((getCardNum() == null) ? 0 : getCardNum().hashCode());
-        result = prime * result + ((getCardName() == null) ? 0 : getCardName().hashCode());
-        result = prime * result + ((getRelation() == null) ? 0 : getRelation().hashCode());
-        result = prime * result + ((getCardTime() == null) ? 0 : getCardTime().hashCode());
-        result = prime * result + ((getCardStatus() == null) ? 0 : getCardStatus().hashCode());
-        return result;
+    public void setUser(User user) {
+        this.user = user;
     }
 
     @Override
     public String toString() {
-        StringBuilder sb = new StringBuilder();
-        sb.append(getClass().getSimpleName());
-        sb.append(" [");
-        sb.append("Hash = ").append(hashCode());
-        sb.append(", id=").append(id);
-        sb.append(", openid=").append(openid);
-        sb.append(", cardType=").append(cardType);
-        sb.append(", cardNum=").append(cardNum);
-        sb.append(", cardName=").append(cardName);
-        sb.append(", relation=").append(relation);
-        sb.append(", cardTime=").append(cardTime);
-        sb.append(", cardStatus=").append(cardStatus);
-        sb.append(", serialVersionUID=").append(serialVersionUID);
-        sb.append("]");
-        return sb.toString();
+        return "Card{" +
+                "id=" + id +
+                ", openid='" + openid + '\'' +
+                ", cardType='" + cardType + '\'' +
+                ", cardNum='" + cardNum + '\'' +
+                ", cardName='" + cardName + '\'' +
+                ", relation='" + relation + '\'' +
+                ", cardTime=" + cardTime +
+                ", cardStatus='" + cardStatus + '\'' +
+                ", user=" + user +
+                '}';
     }
 
     @Override
