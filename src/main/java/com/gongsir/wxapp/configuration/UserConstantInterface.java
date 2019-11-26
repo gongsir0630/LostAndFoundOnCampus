@@ -73,6 +73,6 @@ public interface UserConstantInterface {
     /**
      * QQ消息模板的ID
      */
-    public static final String QQ_TEMPLATE_ID = "7042a11dd04187badac2cab842efb6b5";
+    public static final String QQ_TEMPLATE_ID = "3a3cdfa1192a75cc72a89efd3660cdf7";
 
 }

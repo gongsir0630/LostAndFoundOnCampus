@@ -3,6 +3,7 @@ package com.gongsir.wxapp.controller.wxapi;
 import com.alibaba.fastjson.JSONObject;
 import com.gongsir.wxapp.model.Card;
 import com.gongsir.wxapp.model.Listen;
+import com.gongsir.wxapp.model.User;
 import com.gongsir.wxapp.service.CardService;
 import com.gongsir.wxapp.service.ListenService;
 import com.gongsir.wxapp.service.UserService;

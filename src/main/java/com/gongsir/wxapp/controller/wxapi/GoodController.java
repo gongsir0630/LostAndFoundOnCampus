@@ -1,6 +1,8 @@
 package com.gongsir.wxapp.controller.wxapi;
+
 import com.alibaba.fastjson.JSONObject;
 import com.gongsir.wxapp.model.Good;
+import com.gongsir.wxapp.model.User;
 import com.gongsir.wxapp.service.GoodService;
 import com.gongsir.wxapp.service.UserService;
 import com.gongsir.wxapp.utils.Base64Util;
