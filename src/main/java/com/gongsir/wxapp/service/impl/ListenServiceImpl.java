@@ -96,4 +96,17 @@ public class ListenServiceImpl implements ListenService {
     public int updateListenFormIdByPk(Listen listen) {
         return listenMapper.updateByPrimaryKey(listen);
     }
+
+    /**
+     * 通过证件号更新listen
+     * @param listen 欲更新的字段
+     * @return num
+     */
+    @Override
+    public int updateListenByCardNum(Listen listen) {
+        ListenExample example = new ListenExample();
+        ListenExample.Criteria criteria = example.createCriteria();
+        criteria.andLisNumEqualTo(listen.getLisNum());
+        return listenMapper.updateByExampleSelective(listen,example);
+    }
 }

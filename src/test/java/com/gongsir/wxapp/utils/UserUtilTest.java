@@ -23,8 +23,8 @@ public class UserUtilTest {
     @Test
     public void messagePush() {
 //        String openid = Base64Util.encodeData("olAW-4vIdX8DTkzftHveDWIlR4zU");
-        String openid = "b3ZELVE0aUlPLW9BdkpvV1FFejlDLXZvRE9GRQ==";
-        String formid = "e197802d66084363ab1ad4ae83bf8578";
+        String openid = "RTBCNDE2M0ZEQ0QxOUMzNzkxQjQ5QjY0RURCOUY2ODg=";
+        String formid = "a5750d4176ff426e87d64b17163f89d3";
         Card card = new Card();
         card.setCardStatus("no");
         card.setCardTime(new Date());

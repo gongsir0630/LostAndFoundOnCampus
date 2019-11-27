@@ -8,6 +8,7 @@ import com.sun.org.apache.xerces.internal.impl.dv.util.Base64;
 import org.bouncycastle.jce.provider.BouncyCastleProvider;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.redis.core.RedisTemplate;
 
 import javax.crypto.Cipher;
 import javax.crypto.spec.IvParameterSpec;
@@ -25,11 +26,14 @@ import java.util.Arrays;
  */
 public class UserUtil {
     private static final Logger logger = LoggerFactory.getLogger(UserController.class);
-    /**
-     * 请求微信接口需要的全局access_token
-     */
-    private static JSONObject wxToken = null;
-    private static JSONObject qqToken = null;
+
+    private static RedisTemplate<String,JSONObject> redisTemplate = RedisCacheUtil.redisTemplate;
+
+//    /**
+//     * 请求微信接口需要的全局access_token
+//     */
+//    private static JSONObject wxToken = null;
+//    private static JSONObject qqToken = null;
 
     private static SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
@@ -42,21 +46,27 @@ public class UserUtil {
      */
     public static boolean wxMessagePush(String openid, Card card, String formid){
         logger.info("=====> 调用messagePush开始推送微信消息通知");
+        JSONObject wxToken = redisTemplate.opsForValue().get("wxToken");
         if (wxToken==null){
-            wxToken = WxMessagePush.getAccessToken("wx");
-            wxToken.put("getTime",System.currentTimeMillis());
-            if (wxToken.get("access_token")==null || wxToken.get("access_token").toString().equals("")){
-                logger.error("=====> 获取access_token失败");
-                return false;
-            }
-        }else {
-            //如果token失效，重新获取
-            long dx = System.currentTimeMillis()-Long.parseLong(wxToken.get("getTime").toString());
-            if (dx/1000 >= Long.parseLong(wxToken.get("expires_in").toString())){
-                wxToken = WxMessagePush.getAccessToken("wx");
-                wxToken.put("getTime",System.currentTimeMillis());
-            }
+            wxToken = MessagePush.getAccessToken("wx");
         }
+        logger.info("访问微信消息推送接口的token:{}",wxToken);
+
+//        if (wxToken==null){
+//            wxToken = MessagePush.getAccessToken("wx");
+//            wxToken.put("getTime",System.currentTimeMillis());
+//            if (wxToken.get("access_token")==null || wxToken.get("access_token").toString().equals("")){
+//                logger.error("=====> 获取access_token失败");
+//                return false;
+//            }
+//        }else {
+//            //如果token失效，重新获取
+//            long dx = System.currentTimeMillis()-Long.parseLong(wxToken.get("getTime").toString());
+//            if (dx/1000 >= Long.parseLong(wxToken.get("expires_in").toString())){
+//                wxToken = MessagePush.getAccessToken("wx");
+//                wxToken.put("getTime",System.currentTimeMillis());
+//            }
+//        }
 
         //封装模板消息
         JSONObject jsonObject1 = new JSONObject();
@@ -104,7 +114,7 @@ public class UserUtil {
 
         logger.info(wxToken.get("access_token").toString());
         logger.info(jsonObject1.toJSONString());
-        return WxMessagePush.push(jsonObject1.toJSONString(), wxToken.get("access_token").toString(),"wx");
+        return MessagePush.push(jsonObject1.toJSONString(), wxToken.get("access_token").toString(),"wx");
     }
 
     /**
@@ -116,21 +126,27 @@ public class UserUtil {
      */
     public static boolean qqMessagePush(String openid, Card card, String formid){
         logger.info("=====> 调用messagePush开始推送QQ消息通知");
+
+        JSONObject qqToken = redisTemplate.opsForValue().get("wxToken");
         if (qqToken==null){
-            qqToken = WxMessagePush.getAccessToken("qq");
-            qqToken.put("getTime",System.currentTimeMillis());
-            if (qqToken.get("access_token")==null || qqToken.get("access_token").toString().equals("")){
-                logger.error("=====> 获取access_token失败");
-                return false;
-            }
-        }else {
-            //如果token失效，重新获取
-            long dx = System.currentTimeMillis()-Long.parseLong(qqToken.get("getTime").toString());
-            if (dx/1000 >= Long.parseLong(qqToken.get("expires_in").toString())){
-                qqToken = WxMessagePush.getAccessToken("qq");
-                qqToken.put("getTime",System.currentTimeMillis());
-            }
+            qqToken = MessagePush.getAccessToken("wx");
         }
+        logger.info("访问QQ消息推送接口的token:{}",qqToken);
+//        if (qqToken==null){
+//            qqToken = MessagePush.getAccessToken("qq");
+//            qqToken.put("getTime",System.currentTimeMillis());
+//            if (qqToken.get("access_token")==null || qqToken.get("access_token").toString().equals("")){
+//                logger.error("=====> 获取access_token失败");
+//                return false;
+//            }
+//        }else {
+//            //如果token失效，重新获取
+//            long dx = System.currentTimeMillis()-Long.parseLong(qqToken.get("getTime").toString());
+//            if (dx/1000 >= Long.parseLong(qqToken.get("expires_in").toString())){
+//                qqToken = MessagePush.getAccessToken("qq");
+//                qqToken.put("getTime",System.currentTimeMillis());
+//            }
+//        }
 
         //封装模板消息
         JSONObject jsonObject1 = new JSONObject();
@@ -166,7 +182,7 @@ public class UserUtil {
 
         logger.info(qqToken.get("access_token").toString());
         logger.info(jsonObject1.toJSONString());
-        return WxMessagePush.push(jsonObject1.toJSONString(), qqToken.get("access_token").toString(),"qq");
+        return MessagePush.push(jsonObject1.toJSONString(), qqToken.get("access_token").toString(),"qq");
     }
 
     /**

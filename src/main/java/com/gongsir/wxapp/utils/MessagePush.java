@@ -4,12 +4,17 @@ import com.alibaba.fastjson.JSONObject;
 import com.gongsir.wxapp.configuration.UserConstantInterface;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.redis.core.RedisTemplate;
+
+import java.util.concurrent.TimeUnit;
 
 /**
  * @author gongsir
  */
-class WxMessagePush {
-    private static final Logger logger = LoggerFactory.getLogger(WxMessagePush.class);
+class MessagePush {
+    private static final Logger logger = LoggerFactory.getLogger(MessagePush.class);
+
+    private static RedisTemplate<String,JSONObject> redisTemplate = RedisCacheUtil.redisTemplate;
 
     /**
      * 消息推送
@@ -50,10 +55,18 @@ class WxMessagePush {
         String url;
         if ("qq".equalsIgnoreCase(app)){
             url = UserConstantInterface.QQ_ACCESS_TOKEN_URL + "&appid=" + UserConstantInterface.QQ_APPID + "&secret=" + UserConstantInterface.QQ_LOGIN_SECRET;
+            String result = HttpClientUtil.doGet(url);
+            logger.info("QQ服务端token:{}",result);
+            //qqToken存入redis
+            redisTemplate.opsForValue().set("qqToken", JSONObject.parseObject(result),2, TimeUnit.HOURS);
+            return JSONObject.parseObject(result);
         }else {
             url = UserConstantInterface.ACCESS_TOKEN_URL + "&appid=" + UserConstantInterface.WX_APPID + "&secret=" + UserConstantInterface.WX_LOGIN_SECRET;
+            String result = HttpClientUtil.doGet(url);
+            logger.info("微信服务端token:{}",result);
+            //wxToken存入redis
+            redisTemplate.opsForValue().set("wxToken", JSONObject.parseObject(result),2, TimeUnit.HOURS);
+            return JSONObject.parseObject(result);
         }
-        String result = HttpClientUtil.doGet(url);
-        return JSONObject.parseObject(result);
     }
 }

@@ -50,6 +50,17 @@ public interface GoodService {
 
 
     /**
+     * 通过学号查找当前用户的所有发布信息
+     * @param stuNum 学号
+     * @param page 页码
+     * @param limit 数量
+     * @return list
+     */
+    List<Good> selectByStuNum(String stuNum, int page, int limit);
+    long countByStuNum(String stuNum);
+
+
+    /**
      * 查询所有good信息
      * @param page 页码
      * @param limit 每页显示数量

@@ -46,4 +46,11 @@ public interface ListenService {
      * @param listen 信息
      */
     int updateListenFormIdByPk(Listen listen);
+
+    /**
+     * 根据证件号更新listen信息
+     * @param listen 欲更新的字段
+     * @return 操作成功的行数
+     */
+    int updateListenByCardNum(Listen listen);
 }

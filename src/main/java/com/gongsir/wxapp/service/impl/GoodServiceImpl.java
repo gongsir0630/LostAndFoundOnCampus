@@ -1,12 +1,16 @@
 package com.gongsir.wxapp.service.impl;
 
 import com.gongsir.wxapp.mapper.GoodMapper;
+import com.gongsir.wxapp.mapper.UserMapper;
 import com.gongsir.wxapp.model.Good;
 import com.gongsir.wxapp.model.GoodExample;
+import com.gongsir.wxapp.model.User;
+import com.gongsir.wxapp.model.UserExample;
 import com.gongsir.wxapp.service.GoodService;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -18,6 +22,9 @@ import java.util.List;
 public class GoodServiceImpl implements GoodService {
     @Resource
     GoodMapper goodMapper;
+
+    @Resource
+    UserMapper userMapper;
 
     /**
      * 插入新的物品记录
@@ -88,6 +95,47 @@ public class GoodServiceImpl implements GoodService {
         GoodExample.Criteria criteria = example.createCriteria();
         criteria.andOpenidEqualTo(openID);
         return goodMapper.countByExample(example);
+    }
+
+    @Override
+    public List<Good> selectByStuNum(String stuNum, int page, int limit) {
+        UserExample example = new UserExample();
+        UserExample.Criteria criteria = example.createCriteria();
+        criteria.andStuNumEqualTo(stuNum);
+        List<User> users = userMapper.selectByExample(example);
+        List<String> openids = new ArrayList<>();
+        for (User user :
+                users) {
+            openids.add(user.getUserOpenid());
+        }
+        GoodExample example1 = new GoodExample();
+        GoodExample.Criteria criteria1 = example1.createCriteria();
+        criteria1.andOpenidIn(openids);
+        criteria1.andGoodStatusEqualTo("no");
+        page = Math.max(page, 1);
+        int offset= (page-1)*limit;
+        example1.setOffset(offset);
+        example1.setLimit(limit);
+        example1.setOrderByClause("id desc");
+        return goodMapper.selectByExample(example1);
+    }
+
+    @Override
+    public long countByStuNum(String stuNum) {
+        UserExample example = new UserExample();
+        UserExample.Criteria criteria = example.createCriteria();
+        criteria.andStuNumEqualTo(stuNum);
+        List<User> users = userMapper.selectByExample(example);
+        List<String> openids = new ArrayList<>();
+        for (User user :
+                users) {
+            openids.add(user.getUserOpenid());
+        }
+        GoodExample example1 = new GoodExample();
+        GoodExample.Criteria criteria1 = example1.createCriteria();
+        criteria1.andOpenidIn(openids);
+        criteria1.andGoodStatusEqualTo("no");
+        return goodMapper.countByExample(example1);
     }
 
     /**

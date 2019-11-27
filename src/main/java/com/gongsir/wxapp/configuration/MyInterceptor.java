@@ -41,8 +41,9 @@ public class MyInterceptor implements HandlerInterceptor {
         logger.info("---------------------拦截器身份验证未通过---------------------");
         PrintWriter writer = response.getWriter();
         JSONObject jsonObject = new JSONObject();
-        jsonObject.put("code",401);jsonObject.put("msg","your sessionKey is null or has Invalided!");
-        jsonObject.put("sessionKey",sessionKey);writer.println(jsonObject);
+        jsonObject.put("code",401);jsonObject.put("msg","your sessionKey is null or has Invalided! please reLogin!");
+        jsonObject.put("sessionKey",sessionKey);
+        writer.println(jsonObject);
         return false;
     }
 

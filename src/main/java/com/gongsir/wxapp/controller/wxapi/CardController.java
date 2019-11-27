@@ -144,4 +144,60 @@ public class CardController {
         jsonObject.put("cards",cards);
         return jsonObject;
     }
+
+    /**
+     * 证件认领，一旦被人认领，不再显示在主界面，通过学号认领
+     * @param stuNum 学号
+     * @param cid 证件id
+     * @return 认领状态
+     */
+    @PostMapping(path = "found")
+    public JSONObject foundCardByStuNum(@RequestParam("stuNum")String stuNum,@RequestParam("cid")int cid){
+        JSONObject jsonObject = new JSONObject();
+        int rs = 0;
+        Card card = cardService.selectByPk(cid);
+        if ("no".equalsIgnoreCase(card.getCardStatus())){
+            card.setCardStatus(stuNum);
+            rs = cardService.updateByPk(card);
+            Listen listen = new Listen();
+            listen.setLisNum(stuNum);
+            listen.setLisStatus(stuNum);
+            rs += listenService.updateListenByCardNum(listen);
+        }
+        if (rs>0){
+            jsonObject.put("code",rs);
+            jsonObject.put("msg", "认领成功");
+        }else {
+            jsonObject.put("code", 1024);
+            jsonObject.put("msg","对不起，该物品已被人认领");
+        }
+        return jsonObject;
+    }
+
+    /**
+     * 用户删除自己发布的证件信息
+     * @param id 发布的证件信息id
+     * @param page 当前页数
+     * @param limit 每页显示数量
+     * @param sessionKey 身份标识
+     * @return 删除后新的数据
+     */
+    @PostMapping(path = "del")
+    public JSONObject deleteGoodByPk(@RequestParam("id") String id,
+                                     @RequestParam("page") int page,
+                                     @RequestParam("limit") int limit,
+                                     @RequestParam("sessionKey") String sessionKey){
+        JSONObject jsonObject = new JSONObject();
+        if (Objects.equals(Base64Util.encodeData(Base64Util.decode2Array(sessionKey)[0]), cardService.selectByPk(Integer.valueOf(id)).getOpenid())){
+            int rs = cardService.deleteByPrimaryKey(Integer.valueOf(id));
+            jsonObject.put("code",rs);
+            jsonObject.put("msg","删除成功");
+            jsonObject.put("goods",cardService.selectByOpenId(Base64Util.encodeData(Base64Util.decode2Array(sessionKey)[0]),page,limit));
+            return jsonObject;
+        }else {
+            jsonObject.put("code",1024);
+            jsonObject.put("msg","抱歉,您不具备权限删除该数据,如有疑问,可咨询管理员");
+            return jsonObject;
+        }
+    }
 }
