@@ -73,6 +73,8 @@ public class UserUtil {
         jsonObject1.put("touser",Base64Util.decodeData(openid));
         jsonObject1.put("template_id", UserConstantInterface.TEMPLATE_ID);
         jsonObject1.put("form_id",formid);
+        //小程序页面跳转
+        jsonObject1.put("page","foundCard/foundCard?id="+card.getId());
 
         JSONObject jsonObject2 = new JSONObject();
         JSONObject jsonObject3 = new JSONObject();
@@ -101,7 +103,7 @@ public class UserUtil {
 
         //联系方式
         jsonObject3 = new JSONObject();
-        jsonObject3.put("value",card.getRelation().replaceFirst("place","指定地点领取"));
+        jsonObject3.put("value",card.getRelation().replaceFirst("place","指定地点领取").replaceFirst("tel","电话").replaceFirst("qq","QQ"));
         jsonObject2.put("keyword5",jsonObject3);
 
         //备注
@@ -127,9 +129,9 @@ public class UserUtil {
     public static boolean qqMessagePush(String openid, Card card, String formid){
         logger.info("=====> 调用messagePush开始推送QQ消息通知");
 
-        JSONObject qqToken = redisTemplate.opsForValue().get("wxToken");
+        JSONObject qqToken = redisTemplate.opsForValue().get("qqToken");
         if (qqToken==null){
-            qqToken = MessagePush.getAccessToken("wx");
+            qqToken = MessagePush.getAccessToken("qq");
         }
         logger.info("访问QQ消息推送接口的token:{}",qqToken);
 //        if (qqToken==null){
@@ -153,6 +155,8 @@ public class UserUtil {
         jsonObject1.put("touser",Base64Util.decodeData(openid));
         jsonObject1.put("template_id", UserConstantInterface.QQ_TEMPLATE_ID);
         jsonObject1.put("form_id",formid);
+        //小程序页面跳转
+        jsonObject1.put("page","foundCard/foundCard?id="+card.getId());
 
         JSONObject jsonObject2 = new JSONObject();
         JSONObject jsonObject3 = new JSONObject();
@@ -163,18 +167,18 @@ public class UserUtil {
         }else {
             jsonObject3.put("value","身份证 / idCard");
         }
-        jsonObject2.put("keyword1",jsonObject3);
+        jsonObject2.put("keyword3",jsonObject3);
 
         //证件信息
         jsonObject3 = new JSONObject();
-        jsonObject3.put("value","证件号:"+card.getCardNum()+"\n\n姓  名:"+card.getCardName());
-        jsonObject2.put("keyword2",jsonObject3);
+        jsonObject3.put("value","证件号:"+card.getCardNum()+"\n姓  名:"+card.getCardName());
+        jsonObject2.put("keyword1",jsonObject3);
 
 
         //联系方式
         jsonObject3 = new JSONObject();
-        jsonObject3.put("value",card.getRelation().replaceFirst("place","指定地点领取"));
-        jsonObject2.put("keyword3",jsonObject3);
+        jsonObject3.put("value",card.getRelation().replaceFirst("place","指定地点领取").replaceFirst("tel","电话").replaceFirst("qq","QQ"));
+        jsonObject2.put("keyword2",jsonObject3);
 
 
         logger.info(jsonObject2.toJSONString());

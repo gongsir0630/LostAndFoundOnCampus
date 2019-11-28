@@ -67,7 +67,7 @@ public class ListenController {
             }
             if (rs>0){
                 jsonObject.put("code",rs);
-                jsonObject.put("msg","证件信息监听中,请留意微信小程序通知");
+                jsonObject.put("msg","证件信息监听中,请留意小程序通知");
                 LOGGER.info("返回信息:{}",jsonObject);
                 return jsonObject;
             }else {

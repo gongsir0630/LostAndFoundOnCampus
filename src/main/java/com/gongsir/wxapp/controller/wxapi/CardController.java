@@ -200,4 +200,25 @@ public class CardController {
             return jsonObject;
         }
     }
+
+    /**
+     * 通过id查询信息
+     * @param id 证件唯一id
+     * @return 证件信息
+     */
+    @PostMapping("find")
+    public JSONObject getCardById(@RequestParam("id") int id){
+        logger.info("通过id查找证件信息");
+        JSONObject jsonObject = new JSONObject();
+        Card card = cardService.selectByPk(id);
+        if (card!=null){
+            jsonObject.put("code","ok");
+            jsonObject.put("msg","查询成功");
+            jsonObject.put("card",card);
+        }else {
+            jsonObject.put("code","fail");
+            jsonObject.put("msg","查询失败");
+        }
+        return jsonObject;
+    }
 }
