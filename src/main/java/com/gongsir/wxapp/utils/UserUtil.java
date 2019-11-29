@@ -74,7 +74,7 @@ public class UserUtil {
         jsonObject1.put("template_id", UserConstantInterface.TEMPLATE_ID);
         jsonObject1.put("form_id",formid);
         //小程序页面跳转
-        jsonObject1.put("page","pages/foundCard/foundCard?id="+card.getId());
+        jsonObject1.put("page","/pages/foundCard/foundCard?id="+card.getId());
 
         JSONObject jsonObject2 = new JSONObject();
         JSONObject jsonObject3 = new JSONObject();
@@ -156,7 +156,7 @@ public class UserUtil {
         jsonObject1.put("template_id", UserConstantInterface.QQ_TEMPLATE_ID);
         jsonObject1.put("form_id",formid);
         //小程序页面跳转
-        jsonObject1.put("page","pages/foundCard/foundCard?id="+card.getId());
+        jsonObject1.put("page","/pages/foundCard/foundCard?id="+card.getId());
 
         JSONObject jsonObject2 = new JSONObject();
         JSONObject jsonObject3 = new JSONObject();
