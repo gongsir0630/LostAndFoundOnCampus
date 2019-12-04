@@ -87,4 +87,14 @@ public interface GoodService {
      */
     List<Good> selectByKeyWords(String keyword,int page,int limit);
     long countByKeyWords(String keyword);
+
+    /**
+     * 根据状态查找,可用于认领
+     * @param status 状态
+     * @param page 页数
+     * @param limit 数量
+     * @return good集合
+     */
+    List<Good> selectByGoodStatus(String status, int page, int limit);
+    long countByGoodStatus(String status);
 }

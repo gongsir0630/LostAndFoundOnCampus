@@ -36,6 +36,11 @@ public interface UserConstantInterface {
     public static final String PUSH_URL = "https://api.weixin.qq.com/cgi-bin/message/wxopen/template/send?access_token=";
 
     /**
+     * 微信推送订阅消息的接口
+     */
+    public static final String SUBSCRIBE_URL = "https://api.weixin.qq.com/cgi-bin/message/subscribe/send?access_token=";
+
+    /**
      * 微信消息模板的ID
      */
     public static final String TEMPLATE_ID = "_UrYFmB6FgMZPLyQLJ9n7sTGEQLUD8wCvZZTbh-f3a4";
@@ -56,17 +61,17 @@ public interface UserConstantInterface {
     public static final String QQ_LOGIN_SECRET = "uTU6nJV0FyM9GpOw";
 
     /**
-     * 小程序登录模式
+     * QQ小程序登录模式
      */
     public static final String QQ_LOGIN__GRANT_TYPE = "authorization_code";
 
     /**
-     * 微信获取access_token的接口地址
+     * QQ获取access_token的接口地址
      */
     public static final String QQ_ACCESS_TOKEN_URL = "https://api.q.qq.com/api/getToken?grant_type=client_credential";
 
     /**
-     * 微信推送模板消息的接口
+     * QQ推送模板消息的接口
      */
     public static final String QQ_PUSH_URL = "https://api.q.qq.com/api/json/template/send?access_token=";
 

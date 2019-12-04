@@ -3,7 +3,6 @@ package com.gongsir.wxapp.service.impl;
 import com.gongsir.wxapp.mapper.CardMapper;
 import com.gongsir.wxapp.model.Card;
 import com.gongsir.wxapp.model.CardExample;
-import com.gongsir.wxapp.model.Good;
 import com.gongsir.wxapp.service.CardService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -94,5 +93,22 @@ public class CardServiceImpl implements CardService {
         CardExample.Criteria criteria = example.createCriteria();
         criteria.andOpenidEqualTo(openid);
         return cardMapper.countByExample(example);
+    }
+
+    /**
+     * 已经认领的证件
+     *
+     * @param stuNum 学号
+     * @return list集合
+     */
+    @Override
+    public List<Card> hasFound(String stuNum) {
+        CardExample example = new CardExample();
+        CardExample.Criteria criteria = example.createCriteria();
+        criteria.andCardStatusEqualTo(stuNum);
+        example.setOrderByClause("id desc");
+        example.setLimit(10);
+        example.setOffset(0);
+        return cardMapper.selectByExample(example);
     }
 }

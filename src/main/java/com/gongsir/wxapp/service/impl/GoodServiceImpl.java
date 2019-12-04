@@ -231,4 +231,32 @@ public class GoodServiceImpl implements GoodService {
         example.or(example.createCriteria().andGoodTextsLike('%'+keyword+'%').andGoodStatusEqualTo("no"));
         return goodMapper.countByExample(example);
     }
+
+    /**
+     * 根据状态查找,可用于认领
+     * @param status 状态
+     * @param page 页数
+     * @param limit 数量
+     * @return good集合
+     */
+    @Override
+    public List<Good> selectByGoodStatus(String status, int page, int limit) {
+        GoodExample example = new GoodExample();
+        page = Math.max(page,1);
+        int offset = (page-1)*limit;
+        GoodExample.Criteria criteria = example.createCriteria();
+        criteria.andGoodStatusEqualTo(status);
+        example.setLimit(limit);
+        example.setOffset(offset);
+        example.setOrderByClause("id desc");
+        return goodMapper.selectByExample(example);
+    }
+
+    @Override
+    public long countByGoodStatus(String status) {
+        GoodExample example = new GoodExample();
+        GoodExample.Criteria criteria = example.createCriteria();
+        criteria.andGoodStatusEqualTo(status);
+        return goodMapper.countByExample(example);
+    }
 }

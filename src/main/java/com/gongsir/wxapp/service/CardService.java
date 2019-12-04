@@ -62,4 +62,11 @@ public interface CardService {
      * @return int
      */
     long countByOpenId(String openid);
+
+    /**
+     * 已经认领的证件
+     * @param stuNum 学号
+     * @return list集合
+     */
+    List<Card> hasFound(String stuNum);
 }

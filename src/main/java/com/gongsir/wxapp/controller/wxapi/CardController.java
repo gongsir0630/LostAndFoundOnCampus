@@ -221,4 +221,30 @@ public class CardController {
         }
         return jsonObject;
     }
+
+    /**
+     * 已认领的证件
+     * @param sessionKey 用户身份
+     * @return 近10条数据
+     */
+    @GetMapping(path = "hasFound")
+    public JSONObject cardHasFound(@RequestParam("sessionKey") String sessionKey){
+        JSONObject jsonObject = new JSONObject();
+        String openid = Base64Util.encodeData(Base64Util.decode2Array(sessionKey)[0]);
+        User user = userService.selectUserByOpenID(openid);
+        String stuNum = user.getStuNum();
+        if (stuNum==null){
+            jsonObject.put("code",-1);
+            jsonObject.put("msg","请先实名绑定你的学号");
+            logger.info("返回信息:{}",jsonObject);
+            return jsonObject;
+        }
+        List<Card> cards = cardService.hasFound(stuNum);
+        cards.forEach(card -> card.setUser(userService.selectUserByOpenID(card.getOpenid())));
+        jsonObject.put("cards",cards);
+        jsonObject.put("msg","只显示近10条数据");
+        jsonObject.put("code",cards.size());
+        logger.info("返回信息:{}",jsonObject);
+        return jsonObject;
+    }
 }
