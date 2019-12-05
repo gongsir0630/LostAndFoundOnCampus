@@ -147,13 +147,29 @@ public class CardController {
 
     /**
      * 证件认领，一旦被人认领，不再显示在主界面，通过学号认领
-     * @param stuNum 学号
+     * @param sessionKey 认领人
      * @param cid 证件id
      * @return 认领状态
      */
     @PostMapping(path = "found")
-    public JSONObject foundCardByStuNum(@RequestParam("stuNum")String stuNum,@RequestParam("cid")int cid){
+    public JSONObject foundCardByStuNum(@RequestParam("sessionKey")String sessionKey,@RequestParam("cid")int cid){
         JSONObject jsonObject = new JSONObject();
+        String openid = Base64Util.encodeData(Base64Util.decode2Array(sessionKey)[0]);
+        User user = userService.selectUserByOpenID(openid);
+        String stuNum = null;
+        if (user==null){
+            jsonObject.put("code",401);
+            jsonObject.put("msg","请先授权登录");
+            logger.info("返回信息:{}",jsonObject);
+            return jsonObject;
+        }
+        stuNum = user.getStuNum();
+        if (stuNum==null || "".equalsIgnoreCase(stuNum)){
+            jsonObject.put("code",-1);
+            jsonObject.put("msg","请先实名绑定你的学号");
+            logger.info("返回信息:{}",jsonObject);
+            return jsonObject;
+        }
         int rs = 0;
         Card card = cardService.selectByPk(cid);
         if ("no".equalsIgnoreCase(card.getCardStatus())){
