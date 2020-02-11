@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.gongsir.wxapp.mapper.UserMapper">
-  <resultMap id="BaseResultMap" type="com.gongsir.wxapp.model.User">
+<mapper namespace="com.gongsir.wxapp.mapper.AdminMapper">
+  <resultMap id="BaseResultMap" type="com.gongsir.wxapp.model.Admin">
     <id column="id" jdbcType="INTEGER" property="id" />
-    <result column="user_openid" jdbcType="VARCHAR" property="userOpenid" />
-    <result column="stu_num" jdbcType="VARCHAR" property="stuNum" />
-    <result column="user_name" jdbcType="VARCHAR" property="userName" />
-    <result column="user_head" jdbcType="VARCHAR" property="userHead" />
-    <result column="user_app" jdbcType="VARCHAR" property="userApp" />
-    <result column="user_status" jdbcType="INTEGER" property="userStatus" />
+    <result column="adm_id" jdbcType="VARCHAR" property="admId" />
+    <result column="adm_pass" jdbcType="VARCHAR" property="admPass" />
+    <result column="real_name" jdbcType="VARCHAR" property="realName" />
+    <result column="telephone" jdbcType="VARCHAR" property="telephone" />
+    <result column="email" jdbcType="VARCHAR" property="email" />
+    <result column="status" jdbcType="VARCHAR" property="status" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -69,15 +69,15 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, user_openid, stu_num, user_name, user_head, user_app, user_status
+    id, adm_id, adm_pass, real_name, telephone, email, status
   </sql>
-  <select id="selectByExample" parameterType="com.gongsir.wxapp.model.UserExample" resultMap="BaseResultMap">
+  <select id="selectByExample" parameterType="com.gongsir.wxapp.model.AdminExample" resultMap="BaseResultMap">
     select
     <if test="distinct">
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from user
+    from admin
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
@@ -96,105 +96,105 @@
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
-    from user
+    from admin
     where id = #{id,jdbcType=INTEGER}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
-    delete from user
+    delete from admin
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <delete id="deleteByExample" parameterType="com.gongsir.wxapp.model.UserExample">
-    delete from user
+  <delete id="deleteByExample" parameterType="com.gongsir.wxapp.model.AdminExample">
+    delete from admin
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.gongsir.wxapp.model.User">
+  <insert id="insert" parameterType="com.gongsir.wxapp.model.Admin">
     <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
       SELECT LAST_INSERT_ID()
     </selectKey>
-    insert into user (user_openid, stu_num, user_name, 
-      user_head, user_app, user_status
+    insert into admin (adm_id, adm_pass, real_name, 
+      telephone, email, status
       )
-    values (#{userOpenid,jdbcType=VARCHAR}, #{stuNum,jdbcType=VARCHAR}, #{userName,jdbcType=VARCHAR}, 
-      #{userHead,jdbcType=VARCHAR}, #{userApp,jdbcType=VARCHAR}, #{userStatus,jdbcType=INTEGER}
+    values (#{admId,jdbcType=VARCHAR}, #{admPass,jdbcType=VARCHAR}, #{realName,jdbcType=VARCHAR}, 
+      #{telephone,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, #{status,jdbcType=VARCHAR}
       )
   </insert>
-  <insert id="insertSelective" parameterType="com.gongsir.wxapp.model.User">
+  <insert id="insertSelective" parameterType="com.gongsir.wxapp.model.Admin">
     <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
       SELECT LAST_INSERT_ID()
     </selectKey>
-    insert into user
+    insert into admin
     <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="userOpenid != null">
-        user_openid,
+      <if test="admId != null">
+        adm_id,
       </if>
-      <if test="stuNum != null">
-        stu_num,
+      <if test="admPass != null">
+        adm_pass,
       </if>
-      <if test="userName != null">
-        user_name,
+      <if test="realName != null">
+        real_name,
       </if>
-      <if test="userHead != null">
-        user_head,
+      <if test="telephone != null">
+        telephone,
       </if>
-      <if test="userApp != null">
-        user_app,
+      <if test="email != null">
+        email,
       </if>
-      <if test="userStatus != null">
-        user_status,
+      <if test="status != null">
+        status,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="userOpenid != null">
-        #{userOpenid,jdbcType=VARCHAR},
+      <if test="admId != null">
+        #{admId,jdbcType=VARCHAR},
       </if>
-      <if test="stuNum != null">
-        #{stuNum,jdbcType=VARCHAR},
+      <if test="admPass != null">
+        #{admPass,jdbcType=VARCHAR},
       </if>
-      <if test="userName != null">
-        #{userName,jdbcType=VARCHAR},
+      <if test="realName != null">
+        #{realName,jdbcType=VARCHAR},
       </if>
-      <if test="userHead != null">
-        #{userHead,jdbcType=VARCHAR},
+      <if test="telephone != null">
+        #{telephone,jdbcType=VARCHAR},
       </if>
-      <if test="userApp != null">
-        #{userApp,jdbcType=VARCHAR},
+      <if test="email != null">
+        #{email,jdbcType=VARCHAR},
       </if>
-      <if test="userStatus != null">
-        #{userStatus,jdbcType=INTEGER},
+      <if test="status != null">
+        #{status,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.gongsir.wxapp.model.UserExample" resultType="java.lang.Long">
-    select count(*) from user
+  <select id="countByExample" parameterType="com.gongsir.wxapp.model.AdminExample" resultType="java.lang.Long">
+    select count(*) from admin
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map">
-    update user
+    update admin
     <set>
       <if test="record.id != null">
         id = #{record.id,jdbcType=INTEGER},
       </if>
-      <if test="record.userOpenid != null">
-        user_openid = #{record.userOpenid,jdbcType=VARCHAR},
+      <if test="record.admId != null">
+        adm_id = #{record.admId,jdbcType=VARCHAR},
       </if>
-      <if test="record.stuNum != null">
-        stu_num = #{record.stuNum,jdbcType=VARCHAR},
+      <if test="record.admPass != null">
+        adm_pass = #{record.admPass,jdbcType=VARCHAR},
       </if>
-      <if test="record.userName != null">
-        user_name = #{record.userName,jdbcType=VARCHAR},
+      <if test="record.realName != null">
+        real_name = #{record.realName,jdbcType=VARCHAR},
       </if>
-      <if test="record.userHead != null">
-        user_head = #{record.userHead,jdbcType=VARCHAR},
+      <if test="record.telephone != null">
+        telephone = #{record.telephone,jdbcType=VARCHAR},
       </if>
-      <if test="record.userApp != null">
-        user_app = #{record.userApp,jdbcType=VARCHAR},
+      <if test="record.email != null">
+        email = #{record.email,jdbcType=VARCHAR},
       </if>
-      <if test="record.userStatus != null">
-        user_status = #{record.userStatus,jdbcType=INTEGER},
+      <if test="record.status != null">
+        status = #{record.status,jdbcType=VARCHAR},
       </if>
     </set>
     <if test="_parameter != null">
@@ -202,50 +202,50 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map">
-    update user
+    update admin
     set id = #{record.id,jdbcType=INTEGER},
-      user_openid = #{record.userOpenid,jdbcType=VARCHAR},
-      stu_num = #{record.stuNum,jdbcType=VARCHAR},
-      user_name = #{record.userName,jdbcType=VARCHAR},
-      user_head = #{record.userHead,jdbcType=VARCHAR},
-      user_app = #{record.userApp,jdbcType=VARCHAR},
-      user_status = #{record.userStatus,jdbcType=INTEGER}
+      adm_id = #{record.admId,jdbcType=VARCHAR},
+      adm_pass = #{record.admPass,jdbcType=VARCHAR},
+      real_name = #{record.realName,jdbcType=VARCHAR},
+      telephone = #{record.telephone,jdbcType=VARCHAR},
+      email = #{record.email,jdbcType=VARCHAR},
+      status = #{record.status,jdbcType=VARCHAR}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.gongsir.wxapp.model.User">
-    update user
+  <update id="updateByPrimaryKeySelective" parameterType="com.gongsir.wxapp.model.Admin">
+    update admin
     <set>
-      <if test="userOpenid != null">
-        user_openid = #{userOpenid,jdbcType=VARCHAR},
+      <if test="admId != null">
+        adm_id = #{admId,jdbcType=VARCHAR},
       </if>
-      <if test="stuNum != null">
-        stu_num = #{stuNum,jdbcType=VARCHAR},
+      <if test="admPass != null">
+        adm_pass = #{admPass,jdbcType=VARCHAR},
       </if>
-      <if test="userName != null">
-        user_name = #{userName,jdbcType=VARCHAR},
+      <if test="realName != null">
+        real_name = #{realName,jdbcType=VARCHAR},
       </if>
-      <if test="userHead != null">
-        user_head = #{userHead,jdbcType=VARCHAR},
+      <if test="telephone != null">
+        telephone = #{telephone,jdbcType=VARCHAR},
       </if>
-      <if test="userApp != null">
-        user_app = #{userApp,jdbcType=VARCHAR},
+      <if test="email != null">
+        email = #{email,jdbcType=VARCHAR},
       </if>
-      <if test="userStatus != null">
-        user_status = #{userStatus,jdbcType=INTEGER},
+      <if test="status != null">
+        status = #{status,jdbcType=VARCHAR},
       </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.gongsir.wxapp.model.User">
-    update user
-    set user_openid = #{userOpenid,jdbcType=VARCHAR},
-      stu_num = #{stuNum,jdbcType=VARCHAR},
-      user_name = #{userName,jdbcType=VARCHAR},
-      user_head = #{userHead,jdbcType=VARCHAR},
-      user_app = #{userApp,jdbcType=VARCHAR},
-      user_status = #{userStatus,jdbcType=INTEGER}
+  <update id="updateByPrimaryKey" parameterType="com.gongsir.wxapp.model.Admin">
+    update admin
+    set adm_id = #{admId,jdbcType=VARCHAR},
+      adm_pass = #{admPass,jdbcType=VARCHAR},
+      real_name = #{realName,jdbcType=VARCHAR},
+      telephone = #{telephone,jdbcType=VARCHAR},
+      email = #{email,jdbcType=VARCHAR},
+      status = #{status,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
 </mapper>

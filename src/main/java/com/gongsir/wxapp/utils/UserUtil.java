@@ -41,10 +41,9 @@ public class UserUtil {
      * 微信推送模板消息给用户
      * @param openid 用户信息(加密后的)
      * @param card 证件信息
-     * @param formid form表单id
      * @return 操作成功与否
      */
-    public static boolean wxMessagePush(String openid, Card card, String formid){
+    public static boolean wxMessagePush(String openid, Card card){
         logger.info("=====> 调用messagePush开始推送微信消息通知");
         JSONObject wxToken = redisTemplate.opsForValue().get("wxToken");
         if (wxToken==null){
@@ -72,7 +71,6 @@ public class UserUtil {
         JSONObject jsonObject1 = new JSONObject();
         jsonObject1.put("touser",Base64Util.decodeData(openid));
         jsonObject1.put("template_id", UserConstantInterface.TEMPLATE_ID);
-        jsonObject1.put("form_id",formid);
         //小程序页面跳转
         jsonObject1.put("page","/pages/foundCard/foundCard?id="+card.getId());
 
@@ -123,10 +121,9 @@ public class UserUtil {
      * QQ推送模板消息给用户
      * @param openid 用户信息(加密后的)
      * @param card 证件信息
-     * @param formid form表单id
      * @return 操作成功与否
      */
-    public static boolean qqMessagePush(String openid, Card card, String formid){
+    public static boolean qqMessagePush(String openid, Card card){
         logger.info("=====> 调用messagePush开始推送QQ消息通知");
 
         JSONObject qqToken = redisTemplate.opsForValue().get("qqToken");
@@ -154,7 +151,6 @@ public class UserUtil {
         JSONObject jsonObject1 = new JSONObject();
         jsonObject1.put("touser",Base64Util.decodeData(openid));
         jsonObject1.put("template_id", UserConstantInterface.QQ_TEMPLATE_ID);
-        jsonObject1.put("form_id",formid);
         //小程序页面跳转
         jsonObject1.put("page","/pages/foundCard/foundCard?id="+card.getId());
 

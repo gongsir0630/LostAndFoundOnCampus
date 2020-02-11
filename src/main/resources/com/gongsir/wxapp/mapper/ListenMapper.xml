@@ -6,7 +6,7 @@
     <result column="openid" jdbcType="VARCHAR" property="openid" />
     <result column="lis_type" jdbcType="VARCHAR" property="lisType" />
     <result column="lis_num" jdbcType="VARCHAR" property="lisNum" />
-    <result column="form_id" jdbcType="VARCHAR" property="formId" />
+    <result column="telephone" jdbcType="VARCHAR" property="telephone" />
     <result column="lis_status" jdbcType="VARCHAR" property="lisStatus" />
     <result column="lis_time" jdbcType="TIMESTAMP" property="lisTime" />
   </resultMap>
@@ -69,7 +69,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, openid, lis_type, lis_num, form_id, lis_status, lis_time
+    id, openid, lis_type, lis_num, telephone, lis_status, lis_time
   </sql>
   <select id="selectByExample" parameterType="com.gongsir.wxapp.model.ListenExample" resultMap="BaseResultMap">
     select
@@ -114,10 +114,10 @@
       SELECT LAST_INSERT_ID()
     </selectKey>
     insert into listen (openid, lis_type, lis_num, 
-      form_id, lis_status, lis_time
+      telephone, lis_status, lis_time
       )
     values (#{openid,jdbcType=VARCHAR}, #{lisType,jdbcType=VARCHAR}, #{lisNum,jdbcType=VARCHAR}, 
-      #{formId,jdbcType=VARCHAR}, #{lisStatus,jdbcType=VARCHAR}, #{lisTime,jdbcType=TIMESTAMP}
+      #{telephone,jdbcType=VARCHAR}, #{lisStatus,jdbcType=VARCHAR}, #{lisTime,jdbcType=TIMESTAMP}
       )
   </insert>
   <insert id="insertSelective" parameterType="com.gongsir.wxapp.model.Listen">
@@ -135,8 +135,8 @@
       <if test="lisNum != null">
         lis_num,
       </if>
-      <if test="formId != null">
-        form_id,
+      <if test="telephone != null">
+        telephone,
       </if>
       <if test="lisStatus != null">
         lis_status,
@@ -155,8 +155,8 @@
       <if test="lisNum != null">
         #{lisNum,jdbcType=VARCHAR},
       </if>
-      <if test="formId != null">
-        #{formId,jdbcType=VARCHAR},
+      <if test="telephone != null">
+        #{telephone,jdbcType=VARCHAR},
       </if>
       <if test="lisStatus != null">
         #{lisStatus,jdbcType=VARCHAR},
@@ -187,8 +187,8 @@
       <if test="record.lisNum != null">
         lis_num = #{record.lisNum,jdbcType=VARCHAR},
       </if>
-      <if test="record.formId != null">
-        form_id = #{record.formId,jdbcType=VARCHAR},
+      <if test="record.telephone != null">
+        telephone = #{record.telephone,jdbcType=VARCHAR},
       </if>
       <if test="record.lisStatus != null">
         lis_status = #{record.lisStatus,jdbcType=VARCHAR},
@@ -207,7 +207,7 @@
       openid = #{record.openid,jdbcType=VARCHAR},
       lis_type = #{record.lisType,jdbcType=VARCHAR},
       lis_num = #{record.lisNum,jdbcType=VARCHAR},
-      form_id = #{record.formId,jdbcType=VARCHAR},
+      telephone = #{record.telephone,jdbcType=VARCHAR},
       lis_status = #{record.lisStatus,jdbcType=VARCHAR},
       lis_time = #{record.lisTime,jdbcType=TIMESTAMP}
     <if test="_parameter != null">
@@ -226,8 +226,8 @@
       <if test="lisNum != null">
         lis_num = #{lisNum,jdbcType=VARCHAR},
       </if>
-      <if test="formId != null">
-        form_id = #{formId,jdbcType=VARCHAR},
+      <if test="telephone != null">
+        telephone = #{telephone,jdbcType=VARCHAR},
       </if>
       <if test="lisStatus != null">
         lis_status = #{lisStatus,jdbcType=VARCHAR},
@@ -243,7 +243,7 @@
     set openid = #{openid,jdbcType=VARCHAR},
       lis_type = #{lisType,jdbcType=VARCHAR},
       lis_num = #{lisNum,jdbcType=VARCHAR},
-      form_id = #{formId,jdbcType=VARCHAR},
+      telephone = #{telephone,jdbcType=VARCHAR},
       lis_status = #{lisStatus,jdbcType=VARCHAR},
       lis_time = #{lisTime,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=INTEGER}

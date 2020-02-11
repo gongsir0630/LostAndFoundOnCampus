@@ -77,9 +77,9 @@ public class CardController {
                 for (Listen lis :
                         listens) {
                     if ("wx".equals(userService.selectUserByOpenID(lis.getOpenid()).getUserApp())){
-                        flag = UserUtil.wxMessagePush(lis.getOpenid(),card,lis.getFormId());
+                        flag = UserUtil.wxMessagePush(lis.getOpenid(),card);
                     }else {
-                        flag = UserUtil.qqMessagePush(lis.getOpenid(),card,lis.getFormId());
+                        flag = UserUtil.qqMessagePush(lis.getOpenid(),card);
                     }
                 }
             }

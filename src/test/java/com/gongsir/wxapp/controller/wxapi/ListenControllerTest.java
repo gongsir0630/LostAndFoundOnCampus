@@ -21,7 +21,6 @@ class ListenControllerTest {
 //        System.out.println(RedisCacheUtil.redisTemplate.opsForValue().get("aa"));
         Listen listen = new Listen();
         listen.setLisType("stuCard");
-        listen.setFormId("beb638b6a1cc40db830bf633097d22b4");
         listen.setLisNum("201731061426");
         listener.listenCard(listen,"RTBCNDE2M0ZEQ0QxOUMzNzkxQjQ5QjY0RURCOUY2ODg=");
     }

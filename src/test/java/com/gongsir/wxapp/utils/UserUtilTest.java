@@ -24,7 +24,6 @@ public class UserUtilTest {
     public void messagePush() {
 //        String openid = Base64Util.encodeData("olAW-4vIdX8DTkzftHveDWIlR4zU");
         String openid = "RTBCNDE2M0ZEQ0QxOUMzNzkxQjQ5QjY0RURCOUY2ODg=";
-        String formid = "a5750d4176ff426e87d64b17163f89d3";
         Card card = new Card();
         card.setCardStatus("no");
         card.setCardTime(new Date());
@@ -33,6 +32,6 @@ public class UserUtilTest {
         card.setCardType("学生卡");
         card.setId(1);
         card.setRelation("电话:83035678");
-        System.out.println(UserUtil.wxMessagePush(openid,card,formid));
+        System.out.println(UserUtil.wxMessagePush(openid,card));
     }
 }

@@ -51,7 +51,8 @@ public class ListenController {
             if (!listens.isEmpty()){
                 for (Listen listen1 : listens) {
                     if (Objects.equals(listen.getLisNum(),listen1.getLisNum())){
-                        listen1.setFormId(listen.getFormId());
+                        //临时修改为更新电话号码
+                        listen1.setTelephone(listen.getTelephone());
                         int i = listenService.updateListenFormIdByPk(listen1);
                         if (i>0) {
                             rs++;
@@ -84,9 +85,9 @@ public class ListenController {
         //推送消息通知
         boolean b;
         if ("wx".equalsIgnoreCase(userService.selectUserByOpenID(Base64Util.encodeData(Base64Util.decode2Array(sessionKey)[0])).getUserApp())){
-            b = UserUtil.wxMessagePush(Base64Util.encodeData(Base64Util.decode2Array(sessionKey)[0]), cards.get(0), listen.getFormId());
+            b = UserUtil.wxMessagePush(Base64Util.encodeData(Base64Util.decode2Array(sessionKey)[0]), cards.get(0));
         }else {
-            b = UserUtil.qqMessagePush(Base64Util.encodeData(Base64Util.decode2Array(sessionKey)[0]), cards.get(0), listen.getFormId());
+            b = UserUtil.qqMessagePush(Base64Util.encodeData(Base64Util.decode2Array(sessionKey)[0]), cards.get(0));
         }
         if (b){
             jsonObject.put("pushMsg","消息推送成功");
