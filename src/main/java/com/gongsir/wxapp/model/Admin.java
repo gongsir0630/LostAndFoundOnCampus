@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 /**
  * @author 龚涛
+ * 编码不要畏惧变化，要拥抱变化
  */
 public class Admin implements Serializable {
     /**
