@@ -111,4 +111,57 @@ public class CardServiceImpl implements CardService {
         example.setOffset(0);
         return cardMapper.selectByExample(example);
     }
+
+    /**
+     * 批量删除
+     *
+     * @param ids id集合
+     * @return rs
+     */
+    @Override
+    public int deleteCardsByIds(List<Integer> ids) {
+        CardExample example = new CardExample();
+        CardExample.Criteria criteria = example.createCriteria();
+        criteria.andIdIn(ids);
+        return cardMapper.deleteByExample(example);
+    }
+
+    /**
+     * 管理后台获取所有数据
+     *
+     * @param num   证件号
+     * @param type  证件类型
+     * @param page  页码
+     * @param limit 每页显示数量
+     * @return cards
+     */
+    @Override
+    public List<Card> getAllCards(String num, String type, int page, int limit) {
+        page = Math.max(page,1);
+        int offset = (page-1)*limit;
+        CardExample example = new CardExample();
+        CardExample.Criteria criteria = example.createCriteria();
+        if (num != null && !"".equalsIgnoreCase(num.trim())){
+            criteria.andCardNumLike("%"+num+"%");
+        }
+        if (type != null && !"".equalsIgnoreCase(type.trim())){
+            criteria.andCardTypeEqualTo(type);
+        }
+        example.setLimit(limit);
+        example.setOffset(offset);
+        return cardMapper.selectByExample(example);
+    }
+
+    @Override
+    public long countAllCards(String num, String type) {
+        CardExample example = new CardExample();
+        CardExample.Criteria criteria = example.createCriteria();
+        if (num != null && !"".equalsIgnoreCase(num.trim())){
+            criteria.andCardNumLike("%"+num+"%");
+        }
+        if (type != null && !"".equalsIgnoreCase(type.trim())){
+            criteria.andCardTypeEqualTo(type);
+        }
+        return cardMapper.countByExample(example);
+    }
 }

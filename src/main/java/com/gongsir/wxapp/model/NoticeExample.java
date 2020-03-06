@@ -185,6 +185,76 @@ public class NoticeExample {
             return (Criteria) this;
         }
 
+        public Criteria andContextIsNull() {
+            addCriterion("context is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andContextIsNotNull() {
+            addCriterion("context is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andContextEqualTo(String value) {
+            addCriterion("context =", value, "context");
+            return (Criteria) this;
+        }
+
+        public Criteria andContextNotEqualTo(String value) {
+            addCriterion("context <>", value, "context");
+            return (Criteria) this;
+        }
+
+        public Criteria andContextGreaterThan(String value) {
+            addCriterion("context >", value, "context");
+            return (Criteria) this;
+        }
+
+        public Criteria andContextGreaterThanOrEqualTo(String value) {
+            addCriterion("context >=", value, "context");
+            return (Criteria) this;
+        }
+
+        public Criteria andContextLessThan(String value) {
+            addCriterion("context <", value, "context");
+            return (Criteria) this;
+        }
+
+        public Criteria andContextLessThanOrEqualTo(String value) {
+            addCriterion("context <=", value, "context");
+            return (Criteria) this;
+        }
+
+        public Criteria andContextLike(String value) {
+            addCriterion("context like", value, "context");
+            return (Criteria) this;
+        }
+
+        public Criteria andContextNotLike(String value) {
+            addCriterion("context not like", value, "context");
+            return (Criteria) this;
+        }
+
+        public Criteria andContextIn(List<String> values) {
+            addCriterion("context in", values, "context");
+            return (Criteria) this;
+        }
+
+        public Criteria andContextNotIn(List<String> values) {
+            addCriterion("context not in", values, "context");
+            return (Criteria) this;
+        }
+
+        public Criteria andContextBetween(String value1, String value2) {
+            addCriterion("context between", value1, value2, "context");
+            return (Criteria) this;
+        }
+
+        public Criteria andContextNotBetween(String value1, String value2) {
+            addCriterion("context not between", value1, value2, "context");
+            return (Criteria) this;
+        }
+
         public Criteria andAdmIdIsNull() {
             addCriterion("adm_id is null");
             return (Criteria) this;

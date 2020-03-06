@@ -1,40 +1,50 @@
 package com.gongsir.wxapp.model;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+
 import java.io.Serializable;
 
 /**
  * @author 龚涛
  * 编码不要畏惧变化，要拥抱变化
  */
+@ApiModel(value = "管理员信息")
 public class Admin implements Serializable {
     /**
      * 管理员id
      */
+    @ApiModelProperty(value = "id",example = "1")
     private Integer id;
 
     /**
      * 账号
      */
+    @ApiModelProperty(value = "账号")
     private String admId;
 
     /**
      * 密码
      */
+    @ApiModelProperty(value = "密码")
     private String admPass;
 
     /**
      * 姓名
      */
+    @ApiModelProperty(value = "真实姓名")
     private String realName;
 
     /**
      * 电话
      */
+    @ApiModelProperty(value = "电话")
     private String telephone;
 
     /**
      * 邮箱
      */
+    @ApiModelProperty(value = "邮箱")
     private String email;
 
     /**

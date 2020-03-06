@@ -3,7 +3,7 @@ package com.gongsir.wxapp.model;
 import java.io.Serializable;
 
 /**
- * @author 
+ * @author 龚涛
  */
 public class User implements Serializable {
     /**

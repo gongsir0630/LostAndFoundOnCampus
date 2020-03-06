@@ -7,15 +7,17 @@ import com.gongsir.wxapp.service.UserService;
 import com.gongsir.wxapp.utils.Base64Util;
 import com.gongsir.wxapp.utils.HttpClientUtil;
 import com.vdurmont.emoji.EmojiParser;
+import io.swagger.annotations.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
-import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
-import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
@@ -25,6 +27,7 @@ import java.util.concurrent.TimeUnit;
  * @date 2019-11-01 08:27:54
  */
 
+@Api(tags = "小程序用户相关接口")
 @RestController
 @RequestMapping(value = "/wxApi/user")
 public class UserController {
@@ -35,16 +38,6 @@ public class UserController {
     @Autowired
     private StringRedisTemplate redisTemplate;
 
-    @GetMapping(path = "hello")
-    public String hello(){
-        return "hello wxApp!";
-    }
-
-    @GetMapping(path = "index")
-    public ModelAndView index(){
-        return new ModelAndView("index");
-    }
-
     /**
      * 登录注册,存储用户信息
      * @param code 小程序登录code
@@ -53,12 +46,23 @@ public class UserController {
      * @param app 小程序类型，微信或者QQ，微:wx QQ:qq
      * @return 返回自定义登录状态
      */
+    @ApiOperation(value = "小程序用户登录")
     @PostMapping(path = "login")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "code",value = "wx.login()的code",required = true),
+            @ApiImplicitParam(name = "nickName",value = "微信昵称",required = true),
+            @ApiImplicitParam(name = "headImg",value = "微信头像",required = true),
+            @ApiImplicitParam(name = "app",value = "小程序类型,分为wx/qq",required = true,defaultValue = "wx"),
+    })
+    @ApiResponses({
+            @ApiResponse(code = -1,message = "同学你好,欢迎使用西柚失物招领小程序,首次使用请绑定学号,谢谢!"),
+            @ApiResponse(code = 1024,message = "昵称不合法,不能包含特殊字符")
+    })
     public JSONObject wxLogin(@RequestParam("code") String code,
                               @RequestParam(value = "nickName") String name,
                               @RequestParam("headImg")String headImg,
                               @RequestParam(value = "app",defaultValue = "wx")String app){
-        Map<String,String> param = new HashMap<>();
+        Map<String,String> param = new HashMap<>(4);
         //接收微信或者qq接口处理结果
         String result = null;
         if ("qq".equals(app)){
@@ -104,9 +108,10 @@ public class UserController {
                 user.setUserName(EmojiParser.removeAllEmojis(name));
                 user.setUserHead(headImg);
                 user.setUserApp(app);
+                user.setUserStatus(0);
                 userService.saveUser(user);
             }
-        }catch (SQLException e){
+        }catch (Exception e){
             jsonObject.put("code",1024);
             jsonObject.put("msg","昵称不合法,不能包含特殊字符");
             return jsonObject;

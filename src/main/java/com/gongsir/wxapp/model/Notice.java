@@ -13,6 +13,11 @@ public class Notice implements Serializable {
     private Integer id;
 
     /**
+     * 公告内容
+     */
+    private String context;
+
+    /**
      * 更新人
      */
     private String admId;
@@ -27,11 +32,6 @@ public class Notice implements Serializable {
      */
     private String noticeStatus;
 
-    /**
-     * 公告内容
-     */
-    private String context;
-
     private static final long serialVersionUID = 1L;
 
     public Integer getId() {
@@ -40,6 +40,14 @@ public class Notice implements Serializable {
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public String getContext() {
+        return context;
+    }
+
+    public void setContext(String context) {
+        this.context = context;
     }
 
     public String getAdmId() {
@@ -66,14 +74,6 @@ public class Notice implements Serializable {
         this.noticeStatus = noticeStatus;
     }
 
-    public String getContext() {
-        return context;
-    }
-
-    public void setContext(String context) {
-        this.context = context;
-    }
-
     @Override
     public boolean equals(Object that) {
         if (this == that) {
@@ -87,10 +87,10 @@ public class Notice implements Serializable {
         }
         Notice other = (Notice) that;
         return (this.getId() == null ? other.getId() == null : this.getId().equals(other.getId()))
+            && (this.getContext() == null ? other.getContext() == null : this.getContext().equals(other.getContext()))
             && (this.getAdmId() == null ? other.getAdmId() == null : this.getAdmId().equals(other.getAdmId()))
             && (this.getUpdateTime() == null ? other.getUpdateTime() == null : this.getUpdateTime().equals(other.getUpdateTime()))
-            && (this.getNoticeStatus() == null ? other.getNoticeStatus() == null : this.getNoticeStatus().equals(other.getNoticeStatus()))
-            && (this.getContext() == null ? other.getContext() == null : this.getContext().equals(other.getContext()));
+            && (this.getNoticeStatus() == null ? other.getNoticeStatus() == null : this.getNoticeStatus().equals(other.getNoticeStatus()));
     }
 
     @Override
@@ -98,10 +98,10 @@ public class Notice implements Serializable {
         final int prime = 31;
         int result = 1;
         result = prime * result + ((getId() == null) ? 0 : getId().hashCode());
+        result = prime * result + ((getContext() == null) ? 0 : getContext().hashCode());
         result = prime * result + ((getAdmId() == null) ? 0 : getAdmId().hashCode());
         result = prime * result + ((getUpdateTime() == null) ? 0 : getUpdateTime().hashCode());
         result = prime * result + ((getNoticeStatus() == null) ? 0 : getNoticeStatus().hashCode());
-        result = prime * result + ((getContext() == null) ? 0 : getContext().hashCode());
         return result;
     }
 
@@ -112,10 +112,10 @@ public class Notice implements Serializable {
         sb.append(" [");
         sb.append("Hash = ").append(hashCode());
         sb.append(", id=").append(id);
+        sb.append(", context=").append(context);
         sb.append(", admId=").append(admId);
         sb.append(", updateTime=").append(updateTime);
         sb.append(", noticeStatus=").append(noticeStatus);
-        sb.append(", context=").append(context);
         sb.append(", serialVersionUID=").append(serialVersionUID);
         sb.append("]");
         return sb.toString();

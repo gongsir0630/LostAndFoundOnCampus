@@ -83,31 +83,27 @@ public class UserUtil {
         }else {
             jsonObject3.put("value","身份证 / idCard");
         }
-        jsonObject2.put("keyword1",jsonObject3);
+        jsonObject2.put("thing4",jsonObject3);
 
         //证件信息
         jsonObject3 = new JSONObject();
-        jsonObject3.put("value","证件号:"+card.getCardNum()+"\n\n姓  名:"+card.getCardName());
-        jsonObject2.put("keyword2",jsonObject3);
-
-        jsonObject3 = new JSONObject();
-        jsonObject3.put("value","失物招领");
-        jsonObject2.put("keyword3",jsonObject3);
+        jsonObject3.put("value",card.getCardName()+": "+card.getCardNum());
+        jsonObject2.put("thing5",jsonObject3);
 
         //发布时间
         jsonObject3 = new JSONObject();
         jsonObject3.put("value",sdf.format(card.getCardTime()));
-        jsonObject2.put("keyword4",jsonObject3);
+        jsonObject2.put("date6",jsonObject3);
 
         //联系方式
         jsonObject3 = new JSONObject();
         jsonObject3.put("value",card.getRelation().replaceFirst("place","指定地点领取").replaceFirst("tel","电话").replaceFirst("qq","QQ"));
-        jsonObject2.put("keyword5",jsonObject3);
+        jsonObject2.put("thing7",jsonObject3);
 
         //备注
         jsonObject3 = new JSONObject();
         jsonObject3.put("value","感谢使用西柚失物招领,欢迎推广!");
-        jsonObject2.put("keyword6",jsonObject3);
+        jsonObject2.put("thing1",jsonObject3);
 
         logger.info(jsonObject2.toJSONString());
         jsonObject1.put("data",jsonObject2);
@@ -123,7 +119,7 @@ public class UserUtil {
      * @param card 证件信息
      * @return 操作成功与否
      */
-    public static boolean qqMessagePush(String openid, Card card){
+    public static boolean qqMessagePush(String openid, Card card, String formId){
         logger.info("=====> 调用messagePush开始推送QQ消息通知");
 
         JSONObject qqToken = redisTemplate.opsForValue().get("qqToken");
@@ -151,6 +147,7 @@ public class UserUtil {
         JSONObject jsonObject1 = new JSONObject();
         jsonObject1.put("touser",Base64Util.decodeData(openid));
         jsonObject1.put("template_id", UserConstantInterface.QQ_TEMPLATE_ID);
+        jsonObject1.put("form_id",formId);
         //小程序页面跳转
         jsonObject1.put("page","/pages/foundCard/foundCard?id="+card.getId());
 

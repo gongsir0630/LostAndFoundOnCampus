@@ -1,5 +1,7 @@
 package com.gongsir.wxapp.model;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import java.io.Serializable;
 import java.util.Date;
 
@@ -50,6 +52,7 @@ public class Good implements Serializable, Comparable<Good> {
     /**
      * 发布时间
      */
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date time;
 
     /**

@@ -245,7 +245,13 @@ public class GoodServiceImpl implements GoodService {
         page = Math.max(page,1);
         int offset = (page-1)*limit;
         GoodExample.Criteria criteria = example.createCriteria();
-        criteria.andGoodStatusEqualTo(status);
+        if (null != status){
+            if ("ok".equalsIgnoreCase(status)){
+                criteria.andGoodStatusNotEqualTo("no");
+            }else {
+                criteria.andGoodStatusEqualTo(status);
+            }
+        }
         example.setLimit(limit);
         example.setOffset(offset);
         example.setOrderByClause("id desc");
@@ -256,7 +262,27 @@ public class GoodServiceImpl implements GoodService {
     public long countByGoodStatus(String status) {
         GoodExample example = new GoodExample();
         GoodExample.Criteria criteria = example.createCriteria();
-        criteria.andGoodStatusEqualTo(status);
+        if (null != status){
+            if ("ok".equalsIgnoreCase(status)){
+                criteria.andGoodStatusNotEqualTo("no");
+            }else {
+                criteria.andGoodStatusEqualTo(status);
+            }
+        }
         return goodMapper.countByExample(example);
+    }
+
+    /**
+     * 批量删除good
+     *
+     * @param ids id集合
+     * @return rs
+     */
+    @Override
+    public int deleteGoodByIds(List<Integer> ids) {
+        GoodExample example = new GoodExample();
+        GoodExample.Criteria criteria = example.createCriteria();
+        criteria.andIdIn(ids);
+        return goodMapper.deleteByExample(example);
     }
 }

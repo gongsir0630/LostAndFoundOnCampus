@@ -20,14 +20,22 @@ public class MyWebAppConfiguration implements WebMvcConfigurer {
     @Value("${upload.location}")
     private String path;
 
+    /**
+     * wxApi 域下的拦截器
+     */
     @Bean
-    public MyInterceptor getMyInterceptor(){
-        return new MyInterceptor();
+    public WxApiInterceptor getWxApiInterceptor(){
+        return new WxApiInterceptor();
+    }
+
+    @Bean
+    public AdminApiInterceptor getAdminApiInterceptor(){
+        return new AdminApiInterceptor();
     }
 
     /**
      * 配置资源映射
-     * @param registry
+     * @param registry 注册器
      */
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
@@ -37,17 +45,34 @@ public class MyWebAppConfiguration implements WebMvcConfigurer {
 
     /**
      * 配置拦截器
-     * @param registry
+     * @param registry 注册器
      */
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        //配置放行url
-        List<String> stringList = new ArrayList<>();
-        stringList.add("/wxApi/user/login/**");
-        stringList.add("/uploadImg/**");
-        registry.addInterceptor(getMyInterceptor())
-                //拦截所有请求
+        //配置 /wxApi 域下的放行url
+        List<String> wxApiList = new ArrayList<>();
+        wxApiList.add("/wxApi/user/login/**");
+        wxApiList.add("/uploadImg/**");
+        registry.addInterceptor(getWxApiInterceptor())
+                //拦截所有wxApi域下的请求
                 .addPathPatterns("/wxApi/**")
-                .excludePathPatterns(stringList);
+                .excludePathPatterns(wxApiList);
+
+        //配置 /admin 域下的放行url
+        List<String> adminApiList = new ArrayList<>();
+        //获取验证码
+        adminApiList.add("/admin/admin/code/**");
+        //注册
+        adminApiList.add("/admin/admin/register/**");
+        //登录
+        adminApiList.add("/admin/admin/login/**");
+        //vx消息推送
+        adminApiList.add("/admin/wx/**");
+        //账号验证
+        adminApiList.add("/admin/admin/check/**");
+        registry.addInterceptor(getAdminApiInterceptor())
+                //拦截所有admin域下的请求
+                .addPathPatterns("/admin/**")
+                .excludePathPatterns(adminApiList);
     }
 }

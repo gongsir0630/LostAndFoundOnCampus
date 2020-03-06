@@ -29,7 +29,7 @@ class MessagePush {
         if ("qq".equalsIgnoreCase(app)){
             url = UserConstantInterface.QQ_PUSH_URL + accessToken;
         }else {
-            url = UserConstantInterface.PUSH_URL + accessToken;
+            url = UserConstantInterface.SUBSCRIBE_URL + accessToken;
         }
         String result = HttpClientUtil.doPostJson(url, params);
         JSONObject jsonObject = JSONObject.parseObject(result);
@@ -39,7 +39,7 @@ class MessagePush {
             flag = true;
             logger.info("通知消息推送成功");
         } else {
-            logger.info("模板消息发送失败:" + errorCode + "," + errorMessage);
+            logger.info("消息发送失败:" + errorCode + "," + errorMessage);
             logger.info(result);
             flag = false;
         }

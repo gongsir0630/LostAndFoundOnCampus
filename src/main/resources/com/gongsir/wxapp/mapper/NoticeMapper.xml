@@ -3,12 +3,10 @@
 <mapper namespace="com.gongsir.wxapp.mapper.NoticeMapper">
   <resultMap id="BaseResultMap" type="com.gongsir.wxapp.model.Notice">
     <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="context" jdbcType="VARCHAR" property="context" />
     <result column="adm_id" jdbcType="VARCHAR" property="admId" />
     <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
     <result column="notice_status" jdbcType="VARCHAR" property="noticeStatus" />
-  </resultMap>
-  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.gongsir.wxapp.model.Notice">
-    <result column="context" jdbcType="LONGVARCHAR" property="context" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -69,27 +67,8 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, adm_id, update_time, notice_status
+    id, context, adm_id, update_time, notice_status
   </sql>
-  <sql id="Blob_Column_List">
-    context
-  </sql>
-  <select id="selectByExampleWithBLOBs" parameterType="com.gongsir.wxapp.model.NoticeExample" resultMap="ResultMapWithBLOBs">
-    select
-    <if test="distinct">
-      distinct
-    </if>
-    <include refid="Base_Column_List" />
-    ,
-    <include refid="Blob_Column_List" />
-    from notice
-    <if test="_parameter != null">
-      <include refid="Example_Where_Clause" />
-    </if>
-    <if test="orderByClause != null">
-      order by ${orderByClause}
-    </if>
-  </select>
   <select id="selectByExample" parameterType="com.gongsir.wxapp.model.NoticeExample" resultMap="BaseResultMap">
     select
     <if test="distinct">
@@ -112,11 +91,9 @@
       </if>
     </if>
   </select>
-  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="ResultMapWithBLOBs">
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
-    ,
-    <include refid="Blob_Column_List" />
     from notice
     where id = #{id,jdbcType=INTEGER}
   </select>
@@ -134,10 +111,10 @@
     <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
       SELECT LAST_INSERT_ID()
     </selectKey>
-    insert into notice (adm_id, update_time, notice_status, 
-      context)
-    values (#{admId,jdbcType=VARCHAR}, #{updateTime,jdbcType=TIMESTAMP}, #{noticeStatus,jdbcType=VARCHAR}, 
-      #{context,jdbcType=LONGVARCHAR})
+    insert into notice (context, adm_id, update_time, 
+      notice_status)
+    values (#{context,jdbcType=VARCHAR}, #{admId,jdbcType=VARCHAR}, #{updateTime,jdbcType=TIMESTAMP}, 
+      #{noticeStatus,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.gongsir.wxapp.model.Notice">
     <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
@@ -145,6 +122,9 @@
     </selectKey>
     insert into notice
     <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="context != null">
+        context,
+      </if>
       <if test="admId != null">
         adm_id,
       </if>
@@ -154,11 +134,11 @@
       <if test="noticeStatus != null">
         notice_status,
       </if>
-      <if test="context != null">
-        context,
-      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="context != null">
+        #{context,jdbcType=VARCHAR},
+      </if>
       <if test="admId != null">
         #{admId,jdbcType=VARCHAR},
       </if>
@@ -167,9 +147,6 @@
       </if>
       <if test="noticeStatus != null">
         #{noticeStatus,jdbcType=VARCHAR},
-      </if>
-      <if test="context != null">
-        #{context,jdbcType=LONGVARCHAR},
       </if>
     </trim>
   </insert>
@@ -185,6 +162,9 @@
       <if test="record.id != null">
         id = #{record.id,jdbcType=INTEGER},
       </if>
+      <if test="record.context != null">
+        context = #{record.context,jdbcType=VARCHAR},
+      </if>
       <if test="record.admId != null">
         adm_id = #{record.admId,jdbcType=VARCHAR},
       </if>
@@ -194,21 +174,7 @@
       <if test="record.noticeStatus != null">
         notice_status = #{record.noticeStatus,jdbcType=VARCHAR},
       </if>
-      <if test="record.context != null">
-        context = #{record.context,jdbcType=LONGVARCHAR},
-      </if>
     </set>
-    <if test="_parameter != null">
-      <include refid="Update_By_Example_Where_Clause" />
-    </if>
-  </update>
-  <update id="updateByExampleWithBLOBs" parameterType="map">
-    update notice
-    set id = #{record.id,jdbcType=INTEGER},
-      adm_id = #{record.admId,jdbcType=VARCHAR},
-      update_time = #{record.updateTime,jdbcType=TIMESTAMP},
-      notice_status = #{record.noticeStatus,jdbcType=VARCHAR},
-      context = #{record.context,jdbcType=LONGVARCHAR}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -216,6 +182,7 @@
   <update id="updateByExample" parameterType="map">
     update notice
     set id = #{record.id,jdbcType=INTEGER},
+      context = #{record.context,jdbcType=VARCHAR},
       adm_id = #{record.admId,jdbcType=VARCHAR},
       update_time = #{record.updateTime,jdbcType=TIMESTAMP},
       notice_status = #{record.noticeStatus,jdbcType=VARCHAR}
@@ -226,6 +193,9 @@
   <update id="updateByPrimaryKeySelective" parameterType="com.gongsir.wxapp.model.Notice">
     update notice
     <set>
+      <if test="context != null">
+        context = #{context,jdbcType=VARCHAR},
+      </if>
       <if test="admId != null">
         adm_id = #{admId,jdbcType=VARCHAR},
       </if>
@@ -235,23 +205,13 @@
       <if test="noticeStatus != null">
         notice_status = #{noticeStatus,jdbcType=VARCHAR},
       </if>
-      <if test="context != null">
-        context = #{context,jdbcType=LONGVARCHAR},
-      </if>
     </set>
-    where id = #{id,jdbcType=INTEGER}
-  </update>
-  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.gongsir.wxapp.model.Notice">
-    update notice
-    set adm_id = #{admId,jdbcType=VARCHAR},
-      update_time = #{updateTime,jdbcType=TIMESTAMP},
-      notice_status = #{noticeStatus,jdbcType=VARCHAR},
-      context = #{context,jdbcType=LONGVARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.gongsir.wxapp.model.Notice">
     update notice
-    set adm_id = #{admId,jdbcType=VARCHAR},
+    set context = #{context,jdbcType=VARCHAR},
+      adm_id = #{admId,jdbcType=VARCHAR},
       update_time = #{updateTime,jdbcType=TIMESTAMP},
       notice_status = #{noticeStatus,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}

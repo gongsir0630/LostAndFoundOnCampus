@@ -9,6 +9,7 @@
     <result column="telephone" jdbcType="VARCHAR" property="telephone" />
     <result column="lis_status" jdbcType="VARCHAR" property="lisStatus" />
     <result column="lis_time" jdbcType="TIMESTAMP" property="lisTime" />
+    <result column="form_id" jdbcType="VARCHAR" property="formId" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -69,7 +70,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, openid, lis_type, lis_num, telephone, lis_status, lis_time
+    id, openid, lis_type, lis_num, telephone, lis_status, lis_time, form_id
   </sql>
   <select id="selectByExample" parameterType="com.gongsir.wxapp.model.ListenExample" resultMap="BaseResultMap">
     select
@@ -114,11 +115,11 @@
       SELECT LAST_INSERT_ID()
     </selectKey>
     insert into listen (openid, lis_type, lis_num, 
-      telephone, lis_status, lis_time
-      )
+      telephone, lis_status, lis_time, 
+      form_id)
     values (#{openid,jdbcType=VARCHAR}, #{lisType,jdbcType=VARCHAR}, #{lisNum,jdbcType=VARCHAR}, 
-      #{telephone,jdbcType=VARCHAR}, #{lisStatus,jdbcType=VARCHAR}, #{lisTime,jdbcType=TIMESTAMP}
-      )
+      #{telephone,jdbcType=VARCHAR}, #{lisStatus,jdbcType=VARCHAR}, #{lisTime,jdbcType=TIMESTAMP}, 
+      #{formId,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.gongsir.wxapp.model.Listen">
     <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
@@ -144,6 +145,9 @@
       <if test="lisTime != null">
         lis_time,
       </if>
+      <if test="formId != null">
+        form_id,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="openid != null">
@@ -163,6 +167,9 @@
       </if>
       <if test="lisTime != null">
         #{lisTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="formId != null">
+        #{formId,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -196,6 +203,9 @@
       <if test="record.lisTime != null">
         lis_time = #{record.lisTime,jdbcType=TIMESTAMP},
       </if>
+      <if test="record.formId != null">
+        form_id = #{record.formId,jdbcType=VARCHAR},
+      </if>
     </set>
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
@@ -209,7 +219,8 @@
       lis_num = #{record.lisNum,jdbcType=VARCHAR},
       telephone = #{record.telephone,jdbcType=VARCHAR},
       lis_status = #{record.lisStatus,jdbcType=VARCHAR},
-      lis_time = #{record.lisTime,jdbcType=TIMESTAMP}
+      lis_time = #{record.lisTime,jdbcType=TIMESTAMP},
+      form_id = #{record.formId,jdbcType=VARCHAR}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -235,6 +246,9 @@
       <if test="lisTime != null">
         lis_time = #{lisTime,jdbcType=TIMESTAMP},
       </if>
+      <if test="formId != null">
+        form_id = #{formId,jdbcType=VARCHAR},
+      </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
@@ -245,7 +259,8 @@
       lis_num = #{lisNum,jdbcType=VARCHAR},
       telephone = #{telephone,jdbcType=VARCHAR},
       lis_status = #{lisStatus,jdbcType=VARCHAR},
-      lis_time = #{lisTime,jdbcType=TIMESTAMP}
+      lis_time = #{lisTime,jdbcType=TIMESTAMP},
+      form_id = #{formId,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
 </mapper>

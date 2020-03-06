@@ -64,6 +64,7 @@ public class CardController {
         card.setCardTime(new Date());
         //设置状态为未找到
         card.setCardStatus("no");
+        card.setRelation(card.getRelation().replaceFirst("place","指定地点领取").replaceFirst("tel","联系电话").replaceFirst("qq","联系QQ"));
         int rs = cardService.saveCard(card);
         JSONObject jsonObject = new JSONObject();
         boolean flag = false;
@@ -79,7 +80,7 @@ public class CardController {
                     if ("wx".equals(userService.selectUserByOpenID(lis.getOpenid()).getUserApp())){
                         flag = UserUtil.wxMessagePush(lis.getOpenid(),card);
                     }else {
-                        flag = UserUtil.qqMessagePush(lis.getOpenid(),card);
+                        flag = UserUtil.qqMessagePush(lis.getOpenid(),card,lis.getFormId());
                     }
                 }
             }
@@ -176,7 +177,7 @@ public class CardController {
             card.setCardStatus(stuNum);
             rs = cardService.updateByPk(card);
             Listen listen = new Listen();
-            listen.setLisNum(stuNum);
+            listen.setLisNum(card.getCardNum());
             listen.setLisStatus(stuNum);
             rs += listenService.updateListenByCardNum(listen);
         }

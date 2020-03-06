@@ -1,12 +1,14 @@
 package com.gongsir.wxapp.model;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import java.io.Serializable;
 import java.util.Date;
 
 /**
  * @author 龚涛
  */
-public class Listen implements Serializable,Comparable<Listen> {
+public class Listen implements Serializable, Comparable<Listen> {
     /**
      * 监听id
      */
@@ -40,7 +42,13 @@ public class Listen implements Serializable,Comparable<Listen> {
     /**
      * 监听时间
      */
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date lisTime;
+
+    /**
+     * formId-QQ QQ推送模板消息需要
+     */
+    private String formId;
 
     private static final long serialVersionUID = 1L;
 
@@ -100,6 +108,14 @@ public class Listen implements Serializable,Comparable<Listen> {
         this.lisTime = lisTime;
     }
 
+    public String getFormId() {
+        return formId;
+    }
+
+    public void setFormId(String formId) {
+        this.formId = formId;
+    }
+
     @Override
     public boolean equals(Object that) {
         if (this == that) {
@@ -118,7 +134,8 @@ public class Listen implements Serializable,Comparable<Listen> {
             && (this.getLisNum() == null ? other.getLisNum() == null : this.getLisNum().equals(other.getLisNum()))
             && (this.getTelephone() == null ? other.getTelephone() == null : this.getTelephone().equals(other.getTelephone()))
             && (this.getLisStatus() == null ? other.getLisStatus() == null : this.getLisStatus().equals(other.getLisStatus()))
-            && (this.getLisTime() == null ? other.getLisTime() == null : this.getLisTime().equals(other.getLisTime()));
+            && (this.getLisTime() == null ? other.getLisTime() == null : this.getLisTime().equals(other.getLisTime()))
+            && (this.getFormId() == null ? other.getFormId() == null : this.getFormId().equals(other.getFormId()));
     }
 
     @Override
@@ -132,6 +149,7 @@ public class Listen implements Serializable,Comparable<Listen> {
         result = prime * result + ((getTelephone() == null) ? 0 : getTelephone().hashCode());
         result = prime * result + ((getLisStatus() == null) ? 0 : getLisStatus().hashCode());
         result = prime * result + ((getLisTime() == null) ? 0 : getLisTime().hashCode());
+        result = prime * result + ((getFormId() == null) ? 0 : getFormId().hashCode());
         return result;
     }
 
@@ -148,6 +166,7 @@ public class Listen implements Serializable,Comparable<Listen> {
         sb.append(", telephone=").append(telephone);
         sb.append(", lisStatus=").append(lisStatus);
         sb.append(", lisTime=").append(lisTime);
+        sb.append(", formId=").append(formId);
         sb.append(", serialVersionUID=").append(serialVersionUID);
         sb.append("]");
         return sb.toString();

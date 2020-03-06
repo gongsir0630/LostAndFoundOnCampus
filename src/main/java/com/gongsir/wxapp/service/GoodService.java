@@ -97,4 +97,11 @@ public interface GoodService {
      */
     List<Good> selectByGoodStatus(String status, int page, int limit);
     long countByGoodStatus(String status);
+
+    /**
+     * 批量删除good
+     * @param ids id集合
+     * @return rs
+     */
+    int deleteGoodByIds(List<Integer> ids);
 }

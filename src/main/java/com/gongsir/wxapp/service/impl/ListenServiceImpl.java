@@ -72,12 +72,12 @@ public class ListenServiceImpl implements ListenService {
      * @return 集合
      */
     @Override
-    public List<Listen> selectByOpenId(String openid, String type, String status) {
+    public List<Listen> selectByOpenId(String openid, String num, String status) {
         ListenExample example = new ListenExample();
         ListenExample.Criteria criteria = example.createCriteria();
         criteria.andOpenidEqualTo(openid);
-        if (type!=null){
-            criteria.andLisTypeEqualTo(type);
+        if (num!=null){
+            criteria.andLisNumEqualTo(num);
         }
         if (status!=null){
             criteria.andLisStatusEqualTo(status);
@@ -94,7 +94,7 @@ public class ListenServiceImpl implements ListenService {
      */
     @Override
     public int updateListenFormIdByPk(Listen listen) {
-        return listenMapper.updateByPrimaryKey(listen);
+        return listenMapper.updateByPrimaryKeySelective(listen);
     }
 
     /**
@@ -108,5 +108,77 @@ public class ListenServiceImpl implements ListenService {
         ListenExample.Criteria criteria = example.createCriteria();
         criteria.andLisNumEqualTo(listen.getLisNum());
         return listenMapper.updateByExampleSelective(listen,example);
+    }
+
+    /**
+     * 删除单个实体
+     *
+     * @param id id
+     * @return rs
+     */
+    @Override
+    public int deleteListenById(int id) {
+        return listenMapper.deleteByPrimaryKey(id);
+    }
+
+    /**
+     * 批量删除
+     *
+     * @param ids id集合
+     * @return rs
+     */
+    @Override
+    public int deleteListensByIds(List<Integer> ids) {
+        ListenExample example = new ListenExample();
+        ListenExample.Criteria criteria = example.createCriteria();
+        criteria.andIdIn(ids);
+        return listenMapper.deleteByExample(example);
+    }
+
+    /**
+     * 后台获取所有监听信息
+     *
+     * @param num    证件号
+     * @param status 认领状态
+     * @param page   页码
+     * @param limit  每页显示数量
+     * @return listens
+     */
+    @Override
+    public List<Listen> getAllListens(String num, String status, int page, int limit) {
+        page = Math.max(page,1);
+        int offset = (page-1)*limit;
+        ListenExample example = new ListenExample();
+        ListenExample.Criteria criteria = example.createCriteria();
+        if (null != num){
+            criteria.andLisNumLike("%"+num+"%");
+        }
+        if (null != status){
+            if ("ok".equalsIgnoreCase(status)){
+                criteria.andLisStatusNotEqualTo("no");
+            }else {
+                criteria.andLisStatusEqualTo(status);
+            }
+        }
+        example.setLimit(limit);
+        example.setOffset(offset);
+        return listenMapper.selectByExample(example);
+    }
+
+    @Override
+    public Long countAllListens(String num, String status) {
+        ListenExample example = new ListenExample();
+        ListenExample.Criteria criteria = example.createCriteria();
+        if (null != num){
+            criteria.andLisNumLike("%"+num+"%");
+        }
+        if (null != status){
+            if ("ok".equalsIgnoreCase(status)){
+                criteria.andLisStatusNotEqualTo("no");
+            }else {
+                criteria.andLisStatusEqualTo(status);
+            }
+        }
+        return listenMapper.countByExample(example);
     }
 }

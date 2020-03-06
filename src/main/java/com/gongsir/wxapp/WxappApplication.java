@@ -9,9 +9,11 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  * @date 2019-10-23 21:23:36
  * app启动类
  */
-
 @SpringBootApplication
-//扫描mapper接口
+//        (exclude = {SecurityAutoConfiguration.class})
+/**
+ * 扫描mapper接口
+ */
 @MapperScan("com.gongsir.wxapp.mapper")
 public class WxappApplication {
 

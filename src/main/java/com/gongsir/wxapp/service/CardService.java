@@ -1,7 +1,6 @@
 package com.gongsir.wxapp.service;
 
 import com.gongsir.wxapp.model.Card;
-import com.gongsir.wxapp.model.Good;
 
 import java.util.List;
 
@@ -69,4 +68,22 @@ public interface CardService {
      * @return list集合
      */
     List<Card> hasFound(String stuNum);
+
+    /**
+     * 批量删除
+     * @param ids id集合
+     * @return rs
+     */
+    int deleteCardsByIds(List<Integer> ids);
+
+    /**
+     * 管理后台获取所有数据
+     * @param num 证件号
+     * @param type 证件类型
+     * @param page 页码
+     * @param limit 每页显示数量
+     * @return cards
+     */
+    List<Card> getAllCards(String num,String type,int page,int limit);
+    long countAllCards(String num, String type);
 }

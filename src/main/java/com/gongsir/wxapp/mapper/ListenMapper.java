@@ -2,8 +2,9 @@ package com.gongsir.wxapp.mapper;
 
 import com.gongsir.wxapp.model.Listen;
 import com.gongsir.wxapp.model.ListenExample;
-import java.util.List;
 import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 public interface ListenMapper {
     long countByExample(ListenExample example);

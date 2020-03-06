@@ -35,11 +35,11 @@ public interface ListenService {
     /**
      * 根据用户查找
      * @param openid 用户身份
-     * @param type 证件类型,null不区分类型
+     * @param num 证件号
      * @param status 状态
      * @return 集合
      */
-    List<Listen> selectByOpenId(String openid,String type,String status);
+    List<Listen> selectByOpenId(String openid,String num,String status);
 
     /**
      * 更新formId
@@ -53,4 +53,29 @@ public interface ListenService {
      * @return 操作成功的行数
      */
     int updateListenByCardNum(Listen listen);
+
+    /**
+     * 删除单个实体
+     * @param id id
+     * @return rs
+     */
+    int deleteListenById(int id);
+
+    /**
+     * 批量删除
+     * @param ids id集合
+     * @return rs
+     */
+    int deleteListensByIds(List<Integer> ids);
+
+    /**
+     * 后台获取所有监听信息
+     * @param num 证件号
+     * @param status 认领状态
+     * @param page 页码
+     * @param limit 每页显示数量
+     * @return listens
+     */
+    List<Listen> getAllListens(String num,String status,int page, int limit);
+    Long countAllListens(String num,String status);
 }
