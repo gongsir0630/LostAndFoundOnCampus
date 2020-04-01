@@ -8,6 +8,7 @@
     <result column="user_name" jdbcType="VARCHAR" property="userName" />
     <result column="user_head" jdbcType="VARCHAR" property="userHead" />
     <result column="user_app" jdbcType="VARCHAR" property="userApp" />
+    <result column="user_status" jdbcType="INTEGER" property="userStatus" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -68,7 +69,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, user_openid, stu_num, user_name, user_head, user_app
+    id, user_openid, stu_num, user_name, user_head, user_app, user_status
   </sql>
   <select id="selectByExample" parameterType="com.gongsir.wxapp.model.UserExample" resultMap="BaseResultMap">
     select
@@ -113,9 +114,11 @@
       SELECT LAST_INSERT_ID()
     </selectKey>
     insert into user (user_openid, stu_num, user_name, 
-      user_head, user_app)
+      user_head, user_app, user_status
+      )
     values (#{userOpenid,jdbcType=VARCHAR}, #{stuNum,jdbcType=VARCHAR}, #{userName,jdbcType=VARCHAR}, 
-      #{userHead,jdbcType=VARCHAR}, #{userApp,jdbcType=VARCHAR})
+      #{userHead,jdbcType=VARCHAR}, #{userApp,jdbcType=VARCHAR}, #{userStatus,jdbcType=INTEGER}
+      )
   </insert>
   <insert id="insertSelective" parameterType="com.gongsir.wxapp.model.User">
     <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
@@ -138,6 +141,9 @@
       <if test="userApp != null">
         user_app,
       </if>
+      <if test="userStatus != null">
+        user_status,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="userOpenid != null">
@@ -154,6 +160,9 @@
       </if>
       <if test="userApp != null">
         #{userApp,jdbcType=VARCHAR},
+      </if>
+      <if test="userStatus != null">
+        #{userStatus,jdbcType=INTEGER},
       </if>
     </trim>
   </insert>
@@ -184,6 +193,9 @@
       <if test="record.userApp != null">
         user_app = #{record.userApp,jdbcType=VARCHAR},
       </if>
+      <if test="record.userStatus != null">
+        user_status = #{record.userStatus,jdbcType=INTEGER},
+      </if>
     </set>
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
@@ -196,7 +208,8 @@
       stu_num = #{record.stuNum,jdbcType=VARCHAR},
       user_name = #{record.userName,jdbcType=VARCHAR},
       user_head = #{record.userHead,jdbcType=VARCHAR},
-      user_app = #{record.userApp,jdbcType=VARCHAR}
+      user_app = #{record.userApp,jdbcType=VARCHAR},
+      user_status = #{record.userStatus,jdbcType=INTEGER}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -219,6 +232,9 @@
       <if test="userApp != null">
         user_app = #{userApp,jdbcType=VARCHAR},
       </if>
+      <if test="userStatus != null">
+        user_status = #{userStatus,jdbcType=INTEGER},
+      </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
@@ -228,7 +244,8 @@
       stu_num = #{stuNum,jdbcType=VARCHAR},
       user_name = #{userName,jdbcType=VARCHAR},
       user_head = #{userHead,jdbcType=VARCHAR},
-      user_app = #{userApp,jdbcType=VARCHAR}
+      user_app = #{userApp,jdbcType=VARCHAR},
+      user_status = #{userStatus,jdbcType=INTEGER}
     where id = #{id,jdbcType=INTEGER}
   </update>
 </mapper>

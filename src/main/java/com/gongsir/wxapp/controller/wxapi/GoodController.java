@@ -107,6 +107,7 @@ public class GoodController {
             good.setGoodImage("/uploadImg/"+format+newName);
             good.setTime(new Date());
             good.setGoodStatus("no");
+            good.setRelation(good.getRelation().replaceFirst("place","指定地点领取").replaceFirst("tel","联系电话").replaceFirst("qq","联系QQ"));
             int rs = goodService.saveGood(good);
             jsonObject.put("msg","信息发布成功");
             jsonObject.put("code",rs);

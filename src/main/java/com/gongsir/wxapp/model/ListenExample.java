@@ -395,73 +395,73 @@ public class ListenExample {
             return (Criteria) this;
         }
 
-        public Criteria andFormIdIsNull() {
-            addCriterion("form_id is null");
+        public Criteria andTelephoneIsNull() {
+            addCriterion("telephone is null");
             return (Criteria) this;
         }
 
-        public Criteria andFormIdIsNotNull() {
-            addCriterion("form_id is not null");
+        public Criteria andTelephoneIsNotNull() {
+            addCriterion("telephone is not null");
             return (Criteria) this;
         }
 
-        public Criteria andFormIdEqualTo(String value) {
-            addCriterion("form_id =", value, "formId");
+        public Criteria andTelephoneEqualTo(String value) {
+            addCriterion("telephone =", value, "telephone");
             return (Criteria) this;
         }
 
-        public Criteria andFormIdNotEqualTo(String value) {
-            addCriterion("form_id <>", value, "formId");
+        public Criteria andTelephoneNotEqualTo(String value) {
+            addCriterion("telephone <>", value, "telephone");
             return (Criteria) this;
         }
 
-        public Criteria andFormIdGreaterThan(String value) {
-            addCriterion("form_id >", value, "formId");
+        public Criteria andTelephoneGreaterThan(String value) {
+            addCriterion("telephone >", value, "telephone");
             return (Criteria) this;
         }
 
-        public Criteria andFormIdGreaterThanOrEqualTo(String value) {
-            addCriterion("form_id >=", value, "formId");
+        public Criteria andTelephoneGreaterThanOrEqualTo(String value) {
+            addCriterion("telephone >=", value, "telephone");
             return (Criteria) this;
         }
 
-        public Criteria andFormIdLessThan(String value) {
-            addCriterion("form_id <", value, "formId");
+        public Criteria andTelephoneLessThan(String value) {
+            addCriterion("telephone <", value, "telephone");
             return (Criteria) this;
         }
 
-        public Criteria andFormIdLessThanOrEqualTo(String value) {
-            addCriterion("form_id <=", value, "formId");
+        public Criteria andTelephoneLessThanOrEqualTo(String value) {
+            addCriterion("telephone <=", value, "telephone");
             return (Criteria) this;
         }
 
-        public Criteria andFormIdLike(String value) {
-            addCriterion("form_id like", value, "formId");
+        public Criteria andTelephoneLike(String value) {
+            addCriterion("telephone like", value, "telephone");
             return (Criteria) this;
         }
 
-        public Criteria andFormIdNotLike(String value) {
-            addCriterion("form_id not like", value, "formId");
+        public Criteria andTelephoneNotLike(String value) {
+            addCriterion("telephone not like", value, "telephone");
             return (Criteria) this;
         }
 
-        public Criteria andFormIdIn(List<String> values) {
-            addCriterion("form_id in", values, "formId");
+        public Criteria andTelephoneIn(List<String> values) {
+            addCriterion("telephone in", values, "telephone");
             return (Criteria) this;
         }
 
-        public Criteria andFormIdNotIn(List<String> values) {
-            addCriterion("form_id not in", values, "formId");
+        public Criteria andTelephoneNotIn(List<String> values) {
+            addCriterion("telephone not in", values, "telephone");
             return (Criteria) this;
         }
 
-        public Criteria andFormIdBetween(String value1, String value2) {
-            addCriterion("form_id between", value1, value2, "formId");
+        public Criteria andTelephoneBetween(String value1, String value2) {
+            addCriterion("telephone between", value1, value2, "telephone");
             return (Criteria) this;
         }
 
-        public Criteria andFormIdNotBetween(String value1, String value2) {
-            addCriterion("form_id not between", value1, value2, "formId");
+        public Criteria andTelephoneNotBetween(String value1, String value2) {
+            addCriterion("telephone not between", value1, value2, "telephone");
             return (Criteria) this;
         }
 
@@ -592,6 +592,76 @@ public class ListenExample {
 
         public Criteria andLisTimeNotBetween(Date value1, Date value2) {
             addCriterion("lis_time not between", value1, value2, "lisTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andFormIdIsNull() {
+            addCriterion("form_id is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andFormIdIsNotNull() {
+            addCriterion("form_id is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andFormIdEqualTo(String value) {
+            addCriterion("form_id =", value, "formId");
+            return (Criteria) this;
+        }
+
+        public Criteria andFormIdNotEqualTo(String value) {
+            addCriterion("form_id <>", value, "formId");
+            return (Criteria) this;
+        }
+
+        public Criteria andFormIdGreaterThan(String value) {
+            addCriterion("form_id >", value, "formId");
+            return (Criteria) this;
+        }
+
+        public Criteria andFormIdGreaterThanOrEqualTo(String value) {
+            addCriterion("form_id >=", value, "formId");
+            return (Criteria) this;
+        }
+
+        public Criteria andFormIdLessThan(String value) {
+            addCriterion("form_id <", value, "formId");
+            return (Criteria) this;
+        }
+
+        public Criteria andFormIdLessThanOrEqualTo(String value) {
+            addCriterion("form_id <=", value, "formId");
+            return (Criteria) this;
+        }
+
+        public Criteria andFormIdLike(String value) {
+            addCriterion("form_id like", value, "formId");
+            return (Criteria) this;
+        }
+
+        public Criteria andFormIdNotLike(String value) {
+            addCriterion("form_id not like", value, "formId");
+            return (Criteria) this;
+        }
+
+        public Criteria andFormIdIn(List<String> values) {
+            addCriterion("form_id in", values, "formId");
+            return (Criteria) this;
+        }
+
+        public Criteria andFormIdNotIn(List<String> values) {
+            addCriterion("form_id not in", values, "formId");
+            return (Criteria) this;
+        }
+
+        public Criteria andFormIdBetween(String value1, String value2) {
+            addCriterion("form_id between", value1, value2, "formId");
+            return (Criteria) this;
+        }
+
+        public Criteria andFormIdNotBetween(String value1, String value2) {
+            addCriterion("form_id not between", value1, value2, "formId");
             return (Criteria) this;
         }
     }

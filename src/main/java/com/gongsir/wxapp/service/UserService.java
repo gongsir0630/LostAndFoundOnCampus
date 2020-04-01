@@ -39,4 +39,39 @@ public interface UserService {
      * @return 用户信息
      */
     List<User> selectUsersByStuNum(String stuNum);
+
+    /**
+     * 后台更新用户信息
+     * @param user 用户信息
+     * @return result
+     */
+    int updateUserById(User user);
+
+    /**
+     * 后台管理删除单用户
+     * @param id id
+     * @return rs
+     */
+    int deleteUserById(int id);
+
+    /**
+     * 后台批量删除
+     * @param ids id集合
+     * @return rs
+     */
+    int deleteUsersByIds(List<Integer> ids);
+
+    /**
+     * 后台查看所有小程序用户信息
+     * @param username 学号
+     * @param status app类型
+     * @param limit 每页显示刷量
+     * @param page 当前页码
+     * @return list
+     */
+    List<User> getAllUsers(String username,
+                           String status,
+                           int limit,
+                           int page);
+    long countAllUsers(String username,String status);
 }

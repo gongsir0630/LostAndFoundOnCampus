@@ -79,4 +79,79 @@ public class UserServiceImpl implements UserService {
         criteria.andStuNumEqualTo(stuNum);
         return userMapper.selectByExample(example);
     }
+
+    /**
+     * 后台更新用户信息
+     *
+     * @param user 用户信息
+     * @return result
+     */
+    @Override
+    public int updateUserById(User user) {
+        return userMapper.updateByPrimaryKeySelective(user);
+    }
+
+    /**
+     * 后台管理删除单用户
+     *
+     * @param id id
+     * @return rs
+     */
+    @Override
+    public int deleteUserById(int id) {
+        return userMapper.deleteByPrimaryKey(id);
+    }
+
+    /**
+     * 后台批量删除
+     *
+     * @param ids id集合
+     * @return rs
+     */
+    @Override
+    public int deleteUsersByIds(List<Integer> ids) {
+        UserExample example = new UserExample();
+        UserExample.Criteria criteria = example.createCriteria();
+        criteria.andIdIn(ids);
+        return userMapper.deleteByExample(example);
+    }
+
+    /**
+     * 后台查看所有小程序用户信息
+     *
+     * @param username 学号
+     * @param app   app类型
+     * @param limit    每页显示刷量
+     * @param page     当前页码
+     * @return list
+     */
+    @Override
+    public List<User> getAllUsers(String username, String app, int limit, int page) {
+        page = page > 0 ? page : 1;
+        int offset = (page-1)*limit;
+        UserExample example = new UserExample();
+        UserExample.Criteria criteria = example.createCriteria();
+        if (null != username && !"".equalsIgnoreCase(username.trim())){
+            criteria.andStuNumLike("%"+username+"%");
+        }
+        if (null != app && !"".equalsIgnoreCase(app.trim())){
+            criteria.andUserAppEqualTo(app);
+        }
+        example.setLimit(limit);
+        example.setOffset(offset);
+        return userMapper.selectByExample(example);
+    }
+
+    @Override
+    public long countAllUsers(String username, String app) {
+        UserExample example = new UserExample();
+        UserExample.Criteria criteria = example.createCriteria();
+        if (null != username && !"".equalsIgnoreCase(username.trim())){
+            criteria.andStuNumLike("%"+username+"%");
+        }
+        if (null != app && !"".equalsIgnoreCase(app.trim())){
+            criteria.andUserAppEqualTo(app);
+        }
+        return userMapper.countByExample(example);
+    }
 }

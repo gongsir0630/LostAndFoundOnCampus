@@ -18,8 +18,8 @@ import java.io.PrintWriter;
  * @date 2019/10/25 21:48
  * 编码不要畏惧变化，要拥抱变化
  */
-public class MyInterceptor implements HandlerInterceptor {
-    private static final Logger logger = LoggerFactory.getLogger(MyInterceptor.class);
+public class WxApiInterceptor implements HandlerInterceptor {
+    private static final Logger logger = LoggerFactory.getLogger(WxApiInterceptor.class);
     @Autowired
     private StringRedisTemplate redisTemplate;
 

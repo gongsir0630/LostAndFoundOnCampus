@@ -43,7 +43,7 @@ public interface UserConstantInterface {
     /**
      * 微信消息模板的ID
      */
-    public static final String TEMPLATE_ID = "_UrYFmB6FgMZPLyQLJ9n7sTGEQLUD8wCvZZTbh-f3a4";
+    public static final String TEMPLATE_ID = "AfhvatJqhsic7d-uTdLQ7fXmbHuBAU7tp0NgK1nXhAo";
 
     /**
      * QQ请求login的Api
@@ -80,4 +80,13 @@ public interface UserConstantInterface {
      */
     public static final String QQ_TEMPLATE_ID = "3a3cdfa1192a75cc72a89efd3660cdf7";
 
+    /**
+     * 阿里云短信签名
+     */
+    public static final String SIGN_NAME = "西柚失寻";
+
+    /**
+     * 短信签名模板ID
+     */
+    public static final String TEMPLATE_CODE = "SMS_183267945";
 }

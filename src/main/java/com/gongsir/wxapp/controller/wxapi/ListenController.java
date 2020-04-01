@@ -43,15 +43,19 @@ public class ListenController {
         JSONObject jsonObject = new JSONObject();
         //先去数据库查找是否存在我需要的证件信息
         List<Card> cards = cardService.selectByNumAndStatus(listen.getLisNum(), "no");
-        List<Listen> listens = listenService.selectByOpenId(Base64Util.encodeData(Base64Util.decode2Array(sessionKey)[0]), listen.getLisType(), "no");
+        List<Listen> listens = listenService.selectByOpenId(Base64Util.encodeData(Base64Util.decode2Array(sessionKey)[0]), listen.getLisNum(), "no");
         //不存在我需要的证件信息,添加或者更新监听
         if (cards.isEmpty()){
             int rs = 0;
             //之前提交过formID,更新formId
             if (!listens.isEmpty()){
                 for (Listen listen1 : listens) {
+                    //逻辑上是需要更新所有QQ用户的formId,微信用户不需要formId，但也可对其字段更新，无影响
+                    //如果是同一个证件号
                     if (Objects.equals(listen.getLisNum(),listen1.getLisNum())){
+                        //更新formId
                         listen1.setFormId(listen.getFormId());
+                        listen1.setLisTime(new Date());
                         int i = listenService.updateListenFormIdByPk(listen1);
                         if (i>0) {
                             rs++;
@@ -84,9 +88,9 @@ public class ListenController {
         //推送消息通知
         boolean b;
         if ("wx".equalsIgnoreCase(userService.selectUserByOpenID(Base64Util.encodeData(Base64Util.decode2Array(sessionKey)[0])).getUserApp())){
-            b = UserUtil.wxMessagePush(Base64Util.encodeData(Base64Util.decode2Array(sessionKey)[0]), cards.get(0), listen.getFormId());
+            b = UserUtil.wxMessagePush(Base64Util.encodeData(Base64Util.decode2Array(sessionKey)[0]), cards.get(0));
         }else {
-            b = UserUtil.qqMessagePush(Base64Util.encodeData(Base64Util.decode2Array(sessionKey)[0]), cards.get(0), listen.getFormId());
+            b = UserUtil.qqMessagePush(Base64Util.encodeData(Base64Util.decode2Array(sessionKey)[0]), cards.get(0),listen.getFormId());
         }
         if (b){
             jsonObject.put("pushMsg","消息推送成功");

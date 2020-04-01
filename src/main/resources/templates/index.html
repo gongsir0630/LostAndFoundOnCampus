@@ -14,47 +14,13 @@
     <link rel="stylesheet" type="text/css" href="/static/css/bootstrap.min.css">
     <!-- fileinput theme -->
     <link rel="stylesheet" type="text/css" href="/static/css/fileinput.min.css">
-    <title>文件上传</title>
+    <title>西柚失物招领</title>
 </head>
 <body>
-<!--身份证识别-->
+
 <div class="row">
-    <h3>学生卡识别举例</h3>
-    <form enctype="multipart/form-data" id="idCard-form" action="/idCard" method="post">
-        <div class="col-lg-6">
-            <div class="form-group">
-                <input type="text" value="idCard" name="type">
-<!--                <input type="text" value="stuCard" name="type" hidden="hidden">-->
-                <input type="file" name="file" id="file" class="file" multiple data-min-file-count="1">
-            </div>
-        </div>
-        <div class="col-lg-6">
-            <h4>一卡通识别结果：</h4>
-            <div class="col-lg-6">
-                正面：<br>姓名：<span id="res_name"></span><br>
-                学号：<span id="res_sex"></span>&nbsp;&nbsp;<br>学院：<span id="res_nation"></span><br>
-                专业：<span id="res_bera"></span><br>
-            </div>
-        </div>
-    </form>
+    <h3 style="text-align: center">西柚失物招领</h3>
 </div>
-<script type="text/javascript">
-    //002.身份证识别
-    $("#file").fileinput({
-        uploadUrl: '/wxApi/user/ocr',
-        uploadAsync: false,
-        allowedFileExtensions: ['jpg', 'png', 'gif'],
-        //browseClass: "btn btn-primary", //按钮样式
-        //maxFileSize:0,//单位为kb，如果为0表示不限制文件大小
-        maxFileCount: 1,
-        minFileCount: 1,
-        layoutTemplates: {
-            actionUpload: ''	//去掉略缩图中的上传按钮，去掉哪个就设置哪个
-        },
-        dropZoneTitle: '上传学生卡正面'
-    }).on('filebatchuploadsuccess', function(event, data, previewId, index) {
-        console.log(data);
-    });
-</script>
+
 </body>
 </html>
