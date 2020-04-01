@@ -6,9 +6,9 @@
 
 项目类似于前后端分离开发，前端小程序界面使用vue渲染，数据来源于后端API。
 
-前端地址：https://github.com/Irisssr/LostAndFound
+前端地址：https://github.com/Irisssr/LostAndFound.git
 
-后端API地址：https://github.com/gongsir0630/LostAndFoundOnCampus
+后端API地址：https://github.com/gongsir0630/LostAndFoundOnCampus.git
 
 #### 体验地址
 
