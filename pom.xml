@@ -13,7 +13,7 @@
     <groupId>com.gongSir</groupId>
     <artifactId>wxapp</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>wxapp</name>
+    <name>LostAndFoundOnCampus</name>
     <description>wxApp for swpu lostAndFound</description>
 
     <properties>
