@@ -87,7 +87,8 @@ public class UserUtil {
 
         //证件信息
         jsonObject3 = new JSONObject();
-        jsonObject3.put("value",card.getCardName()+": "+card.getCardNum());
+        // 只能20个字符以内
+        jsonObject3.put("value",card.getCardNum());
         jsonObject2.put("thing5",jsonObject3);
 
         //发布时间
