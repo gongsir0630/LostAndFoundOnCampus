@@ -11,7 +11,7 @@
     </parent>
 <!--    app信息-->
     <groupId>com.gongSir</groupId>
-    <artifactId>wxapp</artifactId>
+    <artifactId>LostAndFoundOnCampus</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>LostAndFoundOnCampus</name>
     <description>wxApp for swpu lostAndFound</description>
