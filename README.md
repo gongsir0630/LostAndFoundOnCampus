@@ -1,32 +1,34 @@
-<h1 align="center"> 西柚失物招领小程序 </h1>
+<h1 align="center"> 西柚失物招领小程序 | API源码 </h1>
 
 <p align="center">
  	<a href="https://github.com/gongsir0630/LostAndFoundOnCampus/releases">
 		<img src="https://img.shields.io/badge/version-2.2.0-brightgreen.svg"
 			 alt="Version">
 	</a>
- 	<a href="https://api.swzl.gongsir.club">
+ 	<a href="https://swzl.gongsir.club/api/swagger-ui.html">
 		<img src="https://img.shields.io/badge/status-updating-success.svg"
 			 alt="Status">
 	</a>
 </p>
 
-### 项目介绍
-👉基于微信小程序的校园失物招领平台，提供OCR识别证件、失物招领消息订阅、web后台可视化数据管理等
+### 项目介绍 :book:
+👉基于微信小程序的校园失物招领平台. 含平台主体微信小程序和web后台数据管理平台.
+* 失物招领信息一览/关键字检索
+* 信息发布(支持图片上传)
+* OCR证件识别(免输入)
+* 证件消息订阅(监听自己遗失的证件信息,及时收到小程序通知)
 
-### 项目特色
-* ocr证件识别
-* 小程序消息订阅
-* 后台管理短信验证登录
-* 邮箱验证
+### 项目技术栈 :star:
+* 小程序: Vue/Uni-app/微信小程序
+* 后端: Java/SpringBoot/MySQL/Redis/百度云/微信小程序API 
 
-#### 项目地址
+#### 项目地址 :link:
 
-项目采用前后端分离开发，小程序使用vue开发，后端数据API采用Java、Spring-Boot开发。
+项目采用前后端分离开发模式，小程序使用vue开发，后端数据API采用Java、Spring-Boot开发.
 
-前端代码地址：https://github.com/Irisssr/LostAndFound.git
+小程序端code地址：https://github.com/gongsir0630/LostAndFound.git
 
-后端API代码地址：https://github.com/gongsir0630/LostAndFoundOnCampus.git
+后端code地址：https://github.com/gongsir0630/LostAndFoundOnCampus.git
 
 #### 体验地址
 
@@ -37,6 +39,8 @@ QQ小程序：搜索【西柚失寻】QQ小程序v1.0版本
 演示视频：[在线演示视频](https://cdn.gongsir.club/video/LostAndFoundVideo.mp4)
 
 #### 使用说明
+
+##### 0. 小程序部署: [戳这里👈](https://github.com/gongsir0630/LostAndFound.git)
 
 ##### 1. clone本仓库到本地
 ```sh

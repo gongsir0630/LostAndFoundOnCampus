@@ -13,12 +13,20 @@ public interface UserConstantInterface {
     /**
      * 微信小程序AppID
      */
-    public static final String WX_APPID = "wx67e6577c6a614550";
+    // 个人主体(陈瑶)
+//    public static final String WX_APPID = "wx67e6577c6a614550";
+
+    // 企业主体(炳钞)
+    public static final String WX_APPID = "wx919fbf9a01e19c72";
 
     /**
      * 微信小程序secret
      */
-    public static final String WX_LOGIN_SECRET = "9bdbf0022027d4e341bc2804769f37e2";
+    // 个人主体
+//    public static final String WX_LOGIN_SECRET = "9bdbf0022027d4e341bc2804769f37e2";
+
+    // 企业主体
+    public static final String WX_LOGIN_SECRET = "440a0f3b78a0992e9985a6bb7d0ee926";
 
     /**
      * 小程序登录模式
@@ -43,7 +51,10 @@ public interface UserConstantInterface {
     /**
      * 微信消息模板的ID
      */
-    public static final String TEMPLATE_ID = "AfhvatJqhsic7d-uTdLQ7fXmbHuBAU7tp0NgK1nXhAo";
+    // 个人
+//    public static final String TEMPLATE_ID = "AfhvatJqhsic7d-uTdLQ7fXmbHuBAU7tp0NgK1nXhAo";
+    // 企业
+    public static final String TEMPLATE_ID = "BqATFm8I0baZtW6ETtTdePDbmCewBnVGoVDy9deOYkY";
 
     /**
      * QQ请求login的Api
