@@ -30,6 +30,8 @@
 
 后端code地址：https://github.com/gongsir0630/LostAndFoundOnCampus.git
 
+web管理端code地址: https://github.com/Irisssr/laf-manager.git
+
 #### 体验地址
 
 QQ小程序：搜索【西柚失寻】QQ小程序v1.0版本
