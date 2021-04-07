@@ -17,6 +17,7 @@
 * 信息发布(支持图片上传)
 * OCR证件识别(免输入)
 * 证件消息订阅(监听自己遗失的证件信息,及时收到小程序通知)
+* 阿里云短信验证码
 
 ### 项目技术栈 :star:
 * 小程序: Vue/Uni-app/微信小程序
@@ -58,13 +59,12 @@ git clone https://github.com/gongsir0630/LostAndFoundOnCampus.git
 * 资源上传位置
 * 端口
 * ~~ssl证书~~(正式环境使用nginx代理)
-##### 4. maven编译打包
+* 订阅消息模板ID(修改`UserConstantInterface.java`中的小程序 APPID 和订阅消息模板 ID)
+* 阿里云短信(修改`AliMsgSend.java`中的 key 和 secret)
+* 百度云 OCR 识别(修改`OCRUtil.java`中的AppID,key,secret)
+##### 4. maven编译运行
 ```sh
-mvn clean package
-```
-##### 5. 本地运行
-```sh
-java -jar xxx.jar
+mvn spring-boot:run
 ```
 ##### 6. 修改小程序中base_api即可（如需上线体验版，则需要配置https域名，详见：微信公众平台）
 
